@@ -1,0 +1,20 @@
+@use '../../assets/styles/abstracts/colors' as *
+@use '../../assets/styles/abstracts/functions' as *
+@use '../../assets/styles/abstracts/mixins' as *
+@use '../../assets/styles/abstracts/variables' as *
+
+.input
+  &__label
+    +visually-hidden
+
+  &__field
+    background-color: $grey-1
+    border-color: transparent
+    border-radius: rem($border-radius--xs)
+    box-sizing: border-box
+    color: $dark-2
+    height: rem(32)
+    padding: rem($margin--xs)
+
+    &::placeholder
+      color: $grey-2
