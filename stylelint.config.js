@@ -2,7 +2,7 @@ module.exports = {
 	defaultSeverity: 'warning',
 	extends: 'stylelint-config-standard',
 	plugins: ['stylelint-order', 'stylelint-scss'],
-	ignoreFiles: ['./node_modules', './assets/styles/base/_normalize.sass'],
+	ignoreFiles: ['./node_modules', './src/assets/styles/base/_normalize.sass'],
 	rules: {
 		'block-closing-brace-empty-line-before': null,
 		'block-closing-brace-newline-after': null,
