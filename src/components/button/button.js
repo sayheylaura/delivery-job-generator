@@ -9,7 +9,7 @@ function Button({ text, onClick }) {
 	};
 
 	return (
-		<button type="button" className="button" onClick={handleOnClick}>
+		<button type="button" className="btn" onClick={handleOnClick}>
 			{text}
 		</button>
 	);
