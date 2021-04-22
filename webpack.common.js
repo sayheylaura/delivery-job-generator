@@ -6,7 +6,7 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, './dist'),
-		assetModuleFilename: 'images/[name][ext]',
+		assetModuleFilename: '[name][ext]',
 		clean: true
 	},
 	module: {
@@ -27,6 +27,14 @@ module.exports = {
 				test: /\.(png|svg|jpg|jpeg|gif)$/i,
 				exclude: /(node_modules)/,
 				type: 'asset/resource'
+			},
+			{
+				test: /\.(woff|woff2)$/i,
+				include: path.resolve(__dirname, './src/assets/fonts'),
+				type: 'asset/resource',
+				generator: {
+					filename: 'assets/fonts/[name][ext]'
+				}
 			}
 		]
 	},
