@@ -15,6 +15,7 @@ module.exports = {
 		'block-opening-brace-space-before': null,
 		'declaration-block-trailing-semicolon': 'never',
 		'number-leading-zero': 'never',
-		'order/properties-alphabetical-order': true
+		'order/properties-alphabetical-order': true,
+		'rule-empty-line-before': 'always'
 	}
 };

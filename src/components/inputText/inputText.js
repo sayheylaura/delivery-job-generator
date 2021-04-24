@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './inputText.sass';
 
-function InputText({ id, label, placeholder, onChange }) {
+function InputText({ className, id, label, placeholder, onChange }) {
 	const [value, setValue] = useState('');
 
 	const handleChange = ev => {
@@ -12,26 +12,27 @@ function InputText({ id, label, placeholder, onChange }) {
 
 	return (
 		<>
-			<label htmlFor={id} className="input__label">
+			<label className="input__label" htmlFor={id}>
 				{label}
 			</label>
 			<input
-				type="text"
-				className="input__field"
+				className={`input__field ${className}`}
 				id={id}
-				placeholder={placeholder}
-				value={value}
 				onChange={handleChange}
+				placeholder={placeholder}
+				type="text"
+				value={value}
 			/>
 		</>
 	);
 }
 
 InputText.propTypes = {
+	className: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
-	placeholder: PropTypes.string.isRequired,
-	onChange: PropTypes.func.isRequired
+	onChange: PropTypes.func.isRequired,
+	placeholder: PropTypes.string.isRequired
 };
 
 export default InputText;

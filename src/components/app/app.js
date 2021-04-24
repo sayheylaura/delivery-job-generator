@@ -1,11 +1,12 @@
 import React from 'react';
+import Form from '../form';
 import './app.sass';
 
 function App() {
 	return (
-		<div className="container">
-			<h1 className="title">Hello world!</h1>
-		</div>
+		<main className="app">
+			<Form />
+		</main>
 	);
 }
 

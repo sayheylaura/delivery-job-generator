@@ -2,22 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './button.sass';
 
-function Button({ text, onClick }) {
+function Button({ className, onClick, text, type }) {
 	const handleOnClick = ev => {
 		ev.preventDefault();
 		onClick();
 	};
 
 	return (
-		<button type="button" className="btn" onClick={handleOnClick}>
+		<button
+			className={`btn ${className}`}
+			onClick={handleOnClick}
+			type={type}
+		>
 			{text}
 		</button>
 	);
 }
 
 Button.propTypes = {
+	className: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
 	text: PropTypes.string.isRequired,
-	onClick: PropTypes.func.isRequired
+	type: PropTypes.string.isRequired
 };
 
 export default Button;
