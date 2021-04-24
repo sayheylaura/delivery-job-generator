@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 module.exports = {
 	entry: path.resolve(__dirname, './src/index.js'),
@@ -24,16 +25,20 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				exclude: /(node_modules)/,
-				type: 'asset/resource'
+				test: /\.svg$/,
+				include: path.resolve(__dirname, './src/assets/images'),
+				loader: 'svg-sprite-loader',
+				options: {
+					extract: true,
+					spriteFileName: './assets/images/sprite.svg' // this is not working :( => https://github.com/JetBrains/svg-sprite-loader/issues/427
+				}
 			},
 			{
 				test: /\.(woff|woff2)$/i,
 				include: path.resolve(__dirname, './src/assets/fonts'),
-				type: 'asset/resource',
-				generator: {
-					filename: 'assets/fonts/[name][ext]'
+				loader: 'file-loader',
+				options: {
+					name: 'assets/fonts/[name][ext]'
 				}
 			}
 		]
@@ -41,6 +46,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, './public/index.html')
-		})
+		}),
+		new SpriteLoaderPlugin()
 	]
 };
