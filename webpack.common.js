@@ -1,6 +1,10 @@
 const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
+
+const envVariables = dotenv.config().parsed;
 
 module.exports = {
 	entry: path.resolve(__dirname, './src/index.js'),
@@ -47,6 +51,9 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: path.resolve(__dirname, './public/index.html')
 		}),
-		new SpriteLoaderPlugin()
+		new SpriteLoaderPlugin(),
+		new webpack.DefinePlugin({
+			'process.env.API_KEY': JSON.stringify(envVariables.API_KEY)
+		})
 	]
 };
