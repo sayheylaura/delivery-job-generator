@@ -1,27 +1,47 @@
 import React from 'react';
-import pickUpBadgeBlankIcon from '../../assets/images/pickUpBadgeBlank.svg';
-import dropOffBadgeBlankIcon from '../../assets/images/dropOffBadgeBlank.svg';
+import PropTypes from 'prop-types';
+import pickUpBadgeBlankIcon from '../../assets/images/sprite/pickUpBadgeBlank.svg';
+import dropOffBadgeBlankIcon from '../../assets/images/sprite/dropOffBadgeBlank.svg';
 import Button from '../button';
 import FormField from '../formField';
 import './form.sass';
 
-function Form() {
+const items = [
+	{
+		icon: pickUpBadgeBlankIcon,
+		id: 'pickupAddress',
+		label: 'Pick up address',
+		name: 'pickupAddress',
+		placeholder: 'Pick up address'
+	},
+	{
+		icon: dropOffBadgeBlankIcon,
+		id: 'dropoffAddress',
+		label: 'Drop off address',
+		name: 'dropoffAddress',
+		placeholder: 'Drop off address'
+	}
+];
+
+function Form({ onItemBlur, onItemChange, state }) {
 	return (
 		<form className="form">
-			<FormField
-				className="form__field"
-				icon={pickUpBadgeBlankIcon}
-				inputTextId="pickup-address"
-				label="Pick up address"
-				placeholder="Pick up address"
-			/>
-			<FormField
-				className="form__field"
-				icon={dropOffBadgeBlankIcon}
-				inputTextId="dropoff-address"
-				label="Drop off address"
-				placeholder="Drop off address"
-			/>
+			{items.map(({ icon, id, label, name, placeholder }) => {
+				return (
+					<FormField
+						className="form__field"
+						icon={icon}
+						id={id}
+						key={id}
+						label={label}
+						name={name}
+						onBlur={onItemBlur}
+						onChange={onItemChange}
+						placeholder={placeholder}
+						value={state[name]}
+					/>
+				);
+			})}
 			<Button
 				className="form__button-submit"
 				onClick={() => {}}
@@ -31,5 +51,14 @@ function Form() {
 		</form>
 	);
 }
+
+Form.propTypes = {
+	onItemBlur: PropTypes.func.isRequired,
+	onItemChange: PropTypes.func.isRequired,
+	state: PropTypes.shape({
+		pickupAddress: PropTypes.string,
+		dropoffAddress: PropTypes.string
+	}).isRequired
+};
 
 export default Form;

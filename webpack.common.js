@@ -11,7 +11,6 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, './dist'),
-		assetModuleFilename: '[name][ext]',
 		clean: true
 	},
 	module: {
@@ -30,7 +29,7 @@ module.exports = {
 			},
 			{
 				test: /\.svg$/,
-				include: path.resolve(__dirname, './src/assets/images'),
+				include: path.resolve(__dirname, './src/assets/images/sprite'),
 				loader: 'svg-sprite-loader',
 				options: {
 					extract: true,
@@ -38,11 +37,20 @@ module.exports = {
 				}
 			},
 			{
-				test: /\.(woff|woff2)$/i,
+				test: /\.svg$/,
+				include: path.resolve(__dirname, './src/assets/images'),
+				exclude: path.resolve(__dirname, './src/assets/images/sprite'),
+				loader: 'file-loader',
+				options: {
+					name: 'assets/images/[name].[ext]'
+				}
+			},
+			{
+				test: /\.(woff|woff2)$/,
 				include: path.resolve(__dirname, './src/assets/fonts'),
 				loader: 'file-loader',
 				options: {
-					name: 'assets/fonts/[name][ext]'
+					name: 'assets/fonts/[name].[ext]'
 				}
 			}
 		]
@@ -53,7 +61,8 @@ module.exports = {
 		}),
 		new SpriteLoaderPlugin(),
 		new webpack.DefinePlugin({
-			'process.env.API_KEY': JSON.stringify(envVariables.API_KEY)
+			'process.env.API_KEY': JSON.stringify(envVariables.API_KEY),
+			'process.env.API_URL': JSON.stringify(envVariables.API_URL)
 		})
 	]
 };

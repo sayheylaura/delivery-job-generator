@@ -4,16 +4,29 @@ import InputText from '../inputText';
 import SvgImage from '../svgImage';
 import './formField.sass';
 
-function FormField({ className, icon, inputTextId, label, placeholder }) {
+function FormField({
+	className,
+	icon,
+	id,
+	label,
+	name,
+	onBlur,
+	onChange,
+	placeholder,
+	value
+}) {
 	return (
 		<div className={`form-field__wrapper ${className}`}>
 			<SvgImage className="form-field__icon" image={icon} />
 			<InputText
 				className="form-field__field"
-				id={inputTextId}
+				id={id}
 				label={label}
-				onChange={() => {}}
+				name={name}
+				onBlur={onBlur}
+				onChange={onChange}
 				placeholder={placeholder}
+				value={value}
 			/>
 		</div>
 	);
@@ -25,9 +38,13 @@ FormField.propTypes = {
 		url: PropTypes.string,
 		viewBox: PropTypes.string
 	}).isRequired,
-	inputTextId: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
-	placeholder: PropTypes.string.isRequired
+	name: PropTypes.string.isRequired,
+	onBlur: PropTypes.func.isRequired,
+	onChange: PropTypes.func.isRequired,
+	placeholder: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired
 };
 
 export default FormField;

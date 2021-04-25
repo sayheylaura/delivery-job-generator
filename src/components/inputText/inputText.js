@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './inputText.sass';
 
-function InputText({ className, id, label, placeholder, onChange }) {
-	const [value, setValue] = useState('');
+function InputText({
+	className,
+	id,
+	label,
+	name,
+	onBlur,
+	onChange,
+	placeholder,
+	value
+}) {
+	const handleOnBlur = ev => {
+		onBlur(ev, id);
+	};
 
 	const handleChange = ev => {
-		setValue(ev.target.value);
-		onChange();
+		onChange(ev, id);
 	};
 
 	return (
@@ -18,6 +28,8 @@ function InputText({ className, id, label, placeholder, onChange }) {
 			<input
 				className={`input__field ${className}`}
 				id={id}
+				name={name}
+				onBlur={handleOnBlur}
 				onChange={handleChange}
 				placeholder={placeholder}
 				type="text"
@@ -31,8 +43,11 @@ InputText.propTypes = {
 	className: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	onBlur: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
-	placeholder: PropTypes.string.isRequired
+	placeholder: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired
 };
 
 export default InputText;
