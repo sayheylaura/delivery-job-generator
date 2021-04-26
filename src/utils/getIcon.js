@@ -11,13 +11,13 @@ const ICONS = {
 	pickupAddress: {
 		blank: pickUpBadgeBlankIcon,
 		error: pickUpBadgeErrorIcon,
-		marker: pickUpMarkerIcon,
+		mapMarker: pickUpMarkerIcon,
 		success: pickUpBadgeSuccessIcon
 	},
 	dropoffAddress: {
 		blank: dropOffBadgeBlankIcon,
 		error: dropOffBadgeErrorIcon,
-		marker: dropOffMarkerIcon,
+		mapMarker: dropOffMarkerIcon,
 		success: dropOffBadgeSuccessIcon
 	}
 };

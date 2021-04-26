@@ -6,13 +6,13 @@ const ADDRESS_TYPES = {
 const ICON_TYPES = {
 	blank: 'blank',
 	error: 'error',
-	marker: 'marker',
+	mapMarker: 'mapMarker',
 	success: 'success'
 };
 
 const INITIAL_COORDINATES = { lat: 48.864961, lng: 2.320186 };
 
-const MARKER_TITLES = {
+const MAP_MARKER_TITLES = {
 	pickupAddress: 'Pick up address',
 	dropoffAddress: 'Drop off address'
 };
@@ -23,6 +23,6 @@ export {
 	ADDRESS_TYPES,
 	ICON_TYPES,
 	INITIAL_COORDINATES,
-	MARKER_TITLES,
+	MAP_MARKER_TITLES,
 	VALID_ADDRESSES
 };

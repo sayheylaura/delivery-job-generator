@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getMap, setMarker, useGeocodeQuery } from '../../services';
+import { createMapMarker, getMap, useGeocodeQuery } from '../../services';
 import {
 	ADDRESS_TYPES,
 	ICON_TYPES,
-	MARKER_TITLES
+	MAP_MARKER_TITLES
 } from '../../utils/constants';
-import { getIcon, isAddressValid } from '../../utils';
+import { getIcon } from '../../utils';
 import Form from '../form';
 import LoadingState from '../loadingState';
 import './app.sass';
@@ -21,17 +21,15 @@ const INITIAL_FORM_STATE = {
 	}
 };
 
-function getEditedItem(state, address) {
-	const editedItem = Object.keys(state).find(key => {
-		return state[key].value === address;
-	});
-	return editedItem;
-}
-
 function App() {
+	const [editedItem, setEditedItem] = useState(null);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [initialLoading, setInitialLoading] = useState(true);
 	const [map, setMap] = useState(null);
+	const [mapMarkers, setMapMarkers] = useState({
+		pickupAddress: null,
+		dropoffAddress: null
+	});
 
 	const mapRef = useRef();
 
@@ -50,39 +48,57 @@ function App() {
 
 	useEffect(() => {
 		if (data && !loading && !error) {
-			const { address, latitude: lat, longitude: lng } = data?.geocode;
+			const { latitude: lat, longitude: lng } = data?.geocode;
 
-			const editedItem = getEditedItem(formState, address);
+			try {
+				const mapMarker = createMapMarker(
+					getIcon(editedItem, ICON_TYPES.mapMarker),
+					map,
+					{ lat, lng },
+					MAP_MARKER_TITLES[editedItem]
+				);
 
-			if (isAddressValid(formState[editedItem].value)) {
-				try {
-					setMarker(
-						getIcon(editedItem, ICON_TYPES.marker),
-						map,
-						{ lat, lng },
-						MARKER_TITLES[editedItem]
-					);
-					setFormState({
-						...formState,
-						[editedItem]: {
-							...formState[editedItem],
-							icon: getIcon(editedItem, ICON_TYPES.success)
-						}
-					});
-				} catch (err) {
-					console.error(err);
-				}
+				setMapMarkers({
+					...mapMarkers,
+					[editedItem]: mapMarker
+				});
+
+				setFormState({
+					...formState,
+					[editedItem]: {
+						...formState[editedItem],
+						icon: getIcon(editedItem, ICON_TYPES.success)
+					}
+				});
+			} catch (err) {
+				console.error(err);
 			}
+
+			return;
+		}
+		if (error) {
+			mapMarkers[editedItem] && mapMarkers[editedItem].setMap(null);
+			setFormState({
+				...formState,
+				[editedItem]: {
+					...formState[editedItem],
+					icon: getIcon(editedItem, ICON_TYPES.error)
+				}
+			});
 		}
 	}, [data, loading, error]);
 
 	const handleItemBlur = ev => {
-		const { name } = ev.target;
-		getGeocode({ variables: { address: formState[name].value } });
+		const { name, value } = ev.target;
+		setEditedItem(name);
+		if (value.trim()) {
+			getGeocode({ variables: { address: formState[name].value } });
+		}
 	};
 
 	const handleItemChange = ev => {
-		const { value, name } = ev.target;
+		const { name, value } = ev.target;
+		setEditedItem(name);
 		setFormState({
 			...formState,
 			[name]: {
@@ -90,6 +106,17 @@ function App() {
 				value
 			}
 		});
+
+		if (!value.trim()) {
+			mapMarkers[name] && mapMarkers[name].setMap(null);
+			setFormState({
+				...formState,
+				[editedItem]: {
+					icon: getIcon(editedItem, ICON_TYPES.blank),
+					value
+				}
+			});
+		}
 	};
 
 	return (

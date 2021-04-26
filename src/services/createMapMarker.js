@@ -1,4 +1,4 @@
-function setMarker(icon, map, position, title) {
+function createMapMarker(icon, map, position, title) {
 	const marker = new window.google.maps.Marker({
 		icon,
 		map,
@@ -8,4 +8,4 @@ function setMarker(icon, map, position, title) {
 	return marker;
 }
 
-export default setMarker;
+export default createMapMarker;
