@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import pickUpBadgeBlankIcon from '../../assets/images/sprite/pickUpBadgeBlank.svg';
-import dropOffBadgeBlankIcon from '../../assets/images/sprite/dropOffBadgeBlank.svg';
 import Button from '../button';
 import FormItem from '../formItem';
 import './form.sass';
 
 const items = [
 	{
-		icon: pickUpBadgeBlankIcon,
 		id: 'pickupAddress',
 		label: 'Pick up address',
 		name: 'pickupAddress',
 		placeholder: 'Pick up address'
 	},
 	{
-		icon: dropOffBadgeBlankIcon,
 		id: 'dropoffAddress',
 		label: 'Drop off address',
 		name: 'dropoffAddress',
@@ -26,11 +22,11 @@ const items = [
 function Form({ formState, onItemBlur, onItemChange }) {
 	return (
 		<form className="form">
-			{items.map(({ icon, id, label, name, placeholder }) => {
+			{items.map(({ id, label, name, placeholder }) => {
 				return (
 					<FormItem
 						className="form__item"
-						icon={icon}
+						icon={formState[name].icon}
 						id={id}
 						key={id}
 						label={label}
@@ -38,7 +34,7 @@ function Form({ formState, onItemBlur, onItemChange }) {
 						onBlur={onItemBlur}
 						onChange={onItemChange}
 						placeholder={placeholder}
-						value={formState[name]}
+						value={formState[name].value}
 					/>
 				);
 			})}
@@ -54,8 +50,20 @@ function Form({ formState, onItemBlur, onItemChange }) {
 
 Form.propTypes = {
 	formState: PropTypes.shape({
-		pickupAddress: PropTypes.string,
-		dropoffAddress: PropTypes.string
+		dropoffAddress: PropTypes.shape({
+			icon: PropTypes.shape({
+				url: PropTypes.string,
+				viewBox: PropTypes.string
+			}),
+			value: PropTypes.string
+		}),
+		pickupAddress: PropTypes.shape({
+			icon: PropTypes.shape({
+				url: PropTypes.string,
+				viewBox: PropTypes.string
+			}),
+			value: PropTypes.string
+		})
 	}).isRequired,
 	onItemBlur: PropTypes.func.isRequired,
 	onItemChange: PropTypes.func.isRequired
