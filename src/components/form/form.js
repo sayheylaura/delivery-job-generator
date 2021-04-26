@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import pickUpBadgeBlankIcon from '../../assets/images/sprite/pickUpBadgeBlank.svg';
 import dropOffBadgeBlankIcon from '../../assets/images/sprite/dropOffBadgeBlank.svg';
 import Button from '../button';
-import FormField from '../formField';
+import FormItem from '../formItem';
 import './form.sass';
 
 const items = [
@@ -28,8 +28,8 @@ function Form({ onItemBlur, onItemChange, state }) {
 		<form className="form">
 			{items.map(({ icon, id, label, name, placeholder }) => {
 				return (
-					<FormField
-						className="form__field"
+					<FormItem
+						className="form__item"
 						icon={icon}
 						id={id}
 						key={id}

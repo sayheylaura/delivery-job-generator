@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import InputText from '../inputText';
 import SvgImage from '../svgImage';
-import './formField.sass';
+import './formItem.sass';
 
-function FormField({
+function FormItem({
 	className,
 	icon,
 	id,
@@ -16,10 +16,10 @@ function FormField({
 	value
 }) {
 	return (
-		<div className={`form-field__wrapper ${className}`}>
-			<SvgImage className="form-field__icon" image={icon} />
+		<div className={`form-item__wrapper ${className}`}>
+			<SvgImage className="form-item__icon" image={icon} />
 			<InputText
-				className="form-field__field"
+				className="form-item__field"
 				id={id}
 				label={label}
 				name={name}
@@ -32,7 +32,7 @@ function FormField({
 	);
 }
 
-FormField.propTypes = {
+FormItem.propTypes = {
 	className: PropTypes.string.isRequired,
 	icon: PropTypes.shape({
 		url: PropTypes.string,
@@ -47,4 +47,4 @@ FormField.propTypes = {
 	value: PropTypes.string.isRequired
 };
 
-export default FormField;
+export default FormItem;
