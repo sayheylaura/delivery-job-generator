@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import pickUpMarker from '../../assets/images/pickUpMarker.svg';
-import { getMap, useGeocodeQuery } from '../../services';
+import pickUpMarkerIcon from '../../assets/images/pickUpMarker.svg';
+import { getMap, setMarker, useGeocodeQuery } from '../../services';
 import Form from '../form';
 import LoadingState from '../loadingState';
 import './app.sass';
@@ -32,12 +32,7 @@ function App() {
 	useEffect(() => {
 		if (data && !loading && !error) {
 			const { latitude: lat, longitude: lng } = data?.geocode;
-			// eslint-disable-next-line no-new
-			new window.google.maps.Marker({
-				position: { lat, lng },
-				map,
-				icon: pickUpMarker
-			});
+			setMarker(pickUpMarkerIcon, map, { lat, lng });
 		}
 	}, [data]);
 
