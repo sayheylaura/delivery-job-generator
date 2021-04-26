@@ -1,4 +1,5 @@
 import { Loader } from '@googlemaps/js-api-loader';
+import { INITIAL_COORDINATES } from '../utils/constants';
 
 async function getMap(element) {
 	const loader = new Loader({
@@ -9,7 +10,7 @@ async function getMap(element) {
 	await loader.load();
 
 	const map = new window.google.maps.Map(element, {
-		center: { lat: 48.864961, lng: 2.320186 },
+		center: INITIAL_COORDINATES,
 		disableDefaultUI: true,
 		zoom: 15
 	});

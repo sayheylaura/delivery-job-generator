@@ -23,7 +23,7 @@ const items = [
 	}
 ];
 
-function Form({ onItemBlur, onItemChange, state }) {
+function Form({ formState, onItemBlur, onItemChange }) {
 	return (
 		<form className="form">
 			{items.map(({ icon, id, label, name, placeholder }) => {
@@ -38,7 +38,7 @@ function Form({ onItemBlur, onItemChange, state }) {
 						onBlur={onItemBlur}
 						onChange={onItemChange}
 						placeholder={placeholder}
-						value={state[name]}
+						value={formState[name]}
 					/>
 				);
 			})}
@@ -53,12 +53,12 @@ function Form({ onItemBlur, onItemChange, state }) {
 }
 
 Form.propTypes = {
-	onItemBlur: PropTypes.func.isRequired,
-	onItemChange: PropTypes.func.isRequired,
-	state: PropTypes.shape({
+	formState: PropTypes.shape({
 		pickupAddress: PropTypes.string,
 		dropoffAddress: PropTypes.string
-	}).isRequired
+	}).isRequired,
+	onItemBlur: PropTypes.func.isRequired,
+	onItemChange: PropTypes.func.isRequired
 };
 
 export default Form;

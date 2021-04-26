@@ -1,15 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import pickUpMarkerIcon from '../../assets/images/pickUpMarker.svg';
+import dropOffMarkerIcon from '../../assets/images/dropOffMarker.svg';
 import { getMap, setMarker, useGeocodeQuery } from '../../services';
+import isAddressValid from '../../utils/isAddressValid';
 import Form from '../form';
 import LoadingState from '../loadingState';
 import './app.sass';
+
+const MARKER_ICONS = {
+	pickupAddress: pickUpMarkerIcon,
+	dropoffAddress: dropOffMarkerIcon
+};
+
+const MARKER_TITLES = {
+	pickupAddress: 'Pick up address',
+	dropoffAddress: 'Drop off address'
+};
 
 function App() {
 	const [initialLoading, setInitialLoading] = useState(true);
 	const [map, setMap] = useState(null);
 
-	const [state, setState] = useState({
+	const [formState, setFormState] = useState({
 		pickupAddress: '',
 		dropoffAddress: ''
 	});
@@ -31,20 +43,34 @@ function App() {
 
 	useEffect(() => {
 		if (data && !loading && !error) {
-			const { latitude: lat, longitude: lng } = data?.geocode;
-			setMarker(pickUpMarkerIcon, map, { lat, lng });
+			const { address, latitude: lat, longitude: lng } = data?.geocode;
+			const editedItem = Object.keys(formState).find(key => {
+				return formState[key] === address;
+			});
+			if (isAddressValid(formState[editedItem])) {
+				try {
+					setMarker(
+						MARKER_ICONS[editedItem],
+						map,
+						{ lat, lng },
+						MARKER_TITLES[editedItem]
+					);
+				} catch (err) {
+					console.error(err);
+				}
+			}
 		}
-	}, [data]);
+	}, [data, loading, error]);
 
 	const handleItemBlur = ev => {
-		const { value } = ev.target;
-		getGeocode({ variables: { address: value } });
+		const { name } = ev.target;
+		getGeocode({ variables: { address: formState[name] } });
 	};
 
 	const handleItemChange = ev => {
 		const { value, name } = ev.target;
-		setState({
-			...state,
+		setFormState({
+			...formState,
 			[name]: value
 		});
 	};
@@ -56,9 +82,9 @@ function App() {
 				<LoadingState />
 			) : (
 				<Form
+					formState={formState}
 					onItemBlur={handleItemBlur}
 					onItemChange={handleItemChange}
-					state={state}
 				/>
 			)}
 		</main>

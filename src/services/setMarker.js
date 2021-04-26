@@ -1,10 +1,11 @@
-function setMarker(icon, map, position) {
-	// eslint-disable-next-line no-new
-	new window.google.maps.Marker({
-		position,
+function setMarker(icon, map, position, title) {
+	const marker = new window.google.maps.Marker({
+		icon,
 		map,
-		icon
+		position,
+		title
 	});
+	return marker;
 }
 
 export default setMarker;
