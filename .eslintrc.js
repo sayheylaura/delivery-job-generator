@@ -11,6 +11,8 @@ module.exports = {
 			'error',
 			{ devDependencies: ['webpack.*.js'] }
 		],
+		'react-hooks/exhaustive-deps': 'warn',
+		'react-hooks/rules-of-hooks': 'error',
 		'react/button-has-type': 'off',
 		'react/jsx-filename-extension': 'off'
 	}
