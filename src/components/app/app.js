@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Loader } from '@googlemaps/js-api-loader';
 import pickUpMarker from '../../assets/images/pickUpMarker.svg';
-import useGeocodeQuery from '../../services/useGeocodeQuery';
+import { getMap, useGeocodeQuery } from '../../services';
 import Form from '../form';
 import LoadingState from '../loadingState';
 import './app.sass';
@@ -19,28 +18,12 @@ function App() {
 
 	const { getGeocode, data, loading, error } = useGeocodeQuery();
 
-	useEffect(async () => {
+	useEffect(() => {
 		try {
-			const loader = new Loader({
-				apiKey: process.env.API_KEY,
-				version: 'weekly'
+			getMap(mapRef.current).then(gmap => {
+				setInitialLoading(false);
+				setMap(gmap);
 			});
-
-			let gmap;
-
-			await loader
-				.load()
-				.then(() => {
-					gmap = new window.google.maps.Map(mapRef.current, {
-						center: { lat: 48.864961, lng: 2.320186 },
-						disableDefaultUI: true,
-						zoom: 15
-					});
-				})
-				.then(() => {
-					setInitialLoading(false);
-					setMap(gmap);
-				});
 		} catch (err) {
 			console.error(err);
 		}
