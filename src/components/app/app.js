@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { createMapMarker, getMap, useGeocodeQuery } from '../../services';
+import {
+	createMapMarker,
+	getMap,
+	useGeocodeQuery,
+	usePostJobMutation
+} from '../../services';
 import {
 	ADDRESS_TYPES,
 	ICON_TYPES,
@@ -35,6 +40,7 @@ function App() {
 	const mapRef = useRef();
 
 	const { getGeocode, data, loading, error } = useGeocodeQuery();
+	const { mutate, loading: creating } = usePostJobMutation();
 
 	function validateForm() {
 		const isValid = Object.keys(formState).every(key => {
@@ -141,6 +147,25 @@ function App() {
 		}
 	};
 
+	const handleClickCreateButton = async () => {
+		try {
+			await mutate({
+				variables: {
+					dropoff: formState.dropoffAddress.value,
+					pickup: formState.pickupAddress.value
+				}
+			});
+
+			Object.keys(formState).forEach(key => {
+				return mapMarkers[key] && mapMarkers[key].setMap(null);
+			});
+
+			setFormState(INITIAL_FORM_STATE);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
 	return (
 		<main className="app">
 			<div className="map" ref={mapRef} />
@@ -148,8 +173,10 @@ function App() {
 				<LoadingState />
 			) : (
 				<Form
+					creating={creating}
 					enableFormButton={enableFormButton}
 					formState={formState}
+					onClickCreateButton={handleClickCreateButton}
 					onItemBlur={handleItemBlur}
 					onItemChange={handleItemChange}
 				/>

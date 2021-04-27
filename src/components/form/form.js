@@ -19,7 +19,14 @@ const items = [
 	}
 ];
 
-function Form({ enableFormButton, formState, onItemBlur, onItemChange }) {
+function Form({
+	creating,
+	enableFormButton,
+	formState,
+	onClickCreateButton,
+	onItemBlur,
+	onItemChange
+}) {
 	return (
 		<form className="form">
 			{items.map(({ id, label, name, placeholder }) => {
@@ -41,8 +48,9 @@ function Form({ enableFormButton, formState, onItemBlur, onItemChange }) {
 			<Button
 				className="form__button-submit"
 				disabled={!enableFormButton}
-				onClick={() => {}}
-				text="Create job"
+				loading={creating}
+				onClick={onClickCreateButton}
+				text={creating ? 'Creating...' : 'Create job'}
 				type="submit"
 			/>
 		</form>
@@ -50,6 +58,7 @@ function Form({ enableFormButton, formState, onItemBlur, onItemChange }) {
 }
 
 Form.propTypes = {
+	creating: PropTypes.bool.isRequired,
 	enableFormButton: PropTypes.bool.isRequired,
 	formState: PropTypes.shape({
 		dropoffAddress: PropTypes.shape({
@@ -67,6 +76,7 @@ Form.propTypes = {
 			value: PropTypes.string
 		})
 	}).isRequired,
+	onClickCreateButton: PropTypes.func.isRequired,
 	onItemBlur: PropTypes.func.isRequired,
 	onItemChange: PropTypes.func.isRequired
 };
