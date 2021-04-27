@@ -44,7 +44,7 @@ module.exports = {
 				loader: 'svg-sprite-loader',
 				options: {
 					extract: true,
-					spriteFileName: './assets/images/sprite.svg' // this is not working :( => https://github.com/JetBrains/svg-sprite-loader/issues/427
+					spriteFilename: 'assets/images/sprite.svg'
 				}
 			},
 			{
