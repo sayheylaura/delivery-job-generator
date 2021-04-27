@@ -7,7 +7,7 @@ function Toaster({ onClick }) {
 	return (
 		<Button
 			category="secondary"
-			className="toaster"
+			className="btn--toaster"
 			onClick={onClick}
 			text="Job has been created successfully!"
 			type="button"

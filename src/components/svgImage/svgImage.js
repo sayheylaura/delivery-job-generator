@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function SvgImage({ className, image }) {
 	return (
-		<svg viewBox={image.viewBox} className={className}>
+		<svg className={className} viewBox={image.viewBox}>
 			<use href={image.url} />
 		</svg>
 	);

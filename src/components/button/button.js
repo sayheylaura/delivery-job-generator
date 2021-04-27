@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BUTTON_CATEGORIES } from '../../utils/constants';
+import { joinClassNames } from '../../utils';
 import './button.sass';
 
 function Button({
@@ -23,9 +24,12 @@ function Button({
 
 	return (
 		<button
-			className={`btn btn--${getButtonCategory()} ${
-				loading ? 'btn--loading' : ''
-			} ${className}`}
+			className={joinClassNames(
+				'btn',
+				`btn--${getButtonCategory()}`,
+				loading ? 'btn--loading' : '',
+				className
+			)}
 			disabled={disabled}
 			onClick={handleOnClick}
 			type={type}
@@ -37,7 +41,7 @@ function Button({
 
 Button.propTypes = {
 	category: PropTypes.string.isRequired,
-	className: PropTypes.string.isRequired,
+	className: PropTypes.string,
 	disabled: PropTypes.bool,
 	loading: PropTypes.bool,
 	onClick: PropTypes.func.isRequired,
@@ -46,6 +50,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+	className: '',
 	disabled: false,
 	loading: false
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { joinClassNames } from '../../utils';
 import InputText from '../inputText';
 import SvgImage from '../svgImage';
 import './formItem.sass';
@@ -16,10 +17,20 @@ function FormItem({
 	value
 }) {
 	return (
-		<div className={`form-item__wrapper ${className}`}>
-			<SvgImage className="form-item__icon" image={icon} />
+		<div
+			className={joinClassNames('form-item__wrapper', className.wrapper)}
+		>
+			<SvgImage
+				className={joinClassNames('form-item__icon', className.icon)}
+				image={icon}
+			/>
 			<InputText
-				className="form-item__field"
+				className={{
+					input: joinClassNames(
+						'form-item__input--flex-grow',
+						className.input
+					)
+				}}
 				id={id}
 				label={label}
 				name={name}
@@ -33,7 +44,11 @@ function FormItem({
 }
 
 FormItem.propTypes = {
-	className: PropTypes.string.isRequired,
+	className: PropTypes.shape({
+		icon: PropTypes.string,
+		input: PropTypes.string,
+		wrapper: PropTypes.string
+	}),
 	icon: PropTypes.shape({
 		url: PropTypes.string,
 		viewBox: PropTypes.string
@@ -45,6 +60,14 @@ FormItem.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired
+};
+
+FormItem.defaultProps = {
+	className: {
+		icon: '',
+		input: '',
+		wrapper: ''
+	}
 };
 
 export default FormItem;

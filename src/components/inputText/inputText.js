@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { joinClassNames } from '../../utils';
 import './inputText.sass';
 
 function InputText({
@@ -22,11 +23,14 @@ function InputText({
 
 	return (
 		<>
-			<label className="input__label" htmlFor={id}>
+			<label
+				className={joinClassNames('input__label', className.label)}
+				htmlFor={id}
+			>
 				{label}
 			</label>
 			<input
-				className={`input__field ${className}`}
+				className={joinClassNames('input__field', className.input)}
 				id={id}
 				name={name}
 				onBlur={handleOnBlur}
@@ -40,7 +44,10 @@ function InputText({
 }
 
 InputText.propTypes = {
-	className: PropTypes.string.isRequired,
+	className: PropTypes.shape({
+		input: PropTypes.string,
+		label: PropTypes.string
+	}),
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
@@ -48,6 +55,13 @@ InputText.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired
+};
+
+InputText.defaultProps = {
+	className: {
+		input: '',
+		label: ''
+	}
 };
 
 export default InputText;

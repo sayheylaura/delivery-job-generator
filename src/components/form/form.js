@@ -32,7 +32,7 @@ function Form({
 			{items.map(({ id, label, name, placeholder }) => {
 				return (
 					<FormItem
-						className="form__item"
+						className={{ wrapper: 'form__item--margin-bottom' }}
 						icon={formState[name].icon}
 						id={id}
 						key={id}
@@ -46,7 +46,7 @@ function Form({
 				);
 			})}
 			<Button
-				className="form__button-submit"
+				className="form__btn--margin-left"
 				category="primary"
 				disabled={!enableFormButton}
 				loading={creating}
