@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Button from '../button';
+
 import './toaster.sass';
 
 function Toaster({ onClick }) {

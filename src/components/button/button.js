@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import joinClassNames from '../../utils/joinClassNames';
+
 import './button.sass';
 
 const BUTTON_CATEGORIES = {

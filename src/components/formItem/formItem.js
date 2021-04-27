@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import joinClassNames from '../../utils/joinClassNames';
 import InputText from '../inputText';
 import SvgImage from '../svgImage';
+
 import './formItem.sass';
 
 function FormItem({

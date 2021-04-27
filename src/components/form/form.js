@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Button from '../button';
 import FormItem from '../formItem';
+
 import './form.sass';
 
-const items = [
+const FORM_ITEMS = [
 	{
 		id: 'pickupAddress',
 		label: 'Pick up address',
@@ -29,7 +31,7 @@ function Form({
 }) {
 	return (
 		<form className="form">
-			{items.map(({ id, label, name, placeholder }) => {
+			{FORM_ITEMS.map(({ id, label, name, placeholder }) => {
 				return (
 					<FormItem
 						className={{ wrapper: 'form__item--margin-bottom' }}

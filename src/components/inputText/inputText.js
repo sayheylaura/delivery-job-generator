@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import joinClassNames from '../../utils/joinClassNames';
+
 import './inputText.sass';
 
 function InputText({

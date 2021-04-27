@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import Form from '../form';
 import LoadingState from '../loadingState';
 import Toaster from '../toaster';
+
 import {
 	createMapMarker,
 	initializeGoogleMap,
@@ -15,6 +17,7 @@ import {
 	MAP_MARKER_TITLES
 } from './utils/constants';
 import { getIcon, validateForm } from './utils';
+
 import './app.sass';
 
 const INITIAL_FORM_STATE = {
