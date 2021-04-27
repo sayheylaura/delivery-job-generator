@@ -5,7 +5,7 @@ import {
 	ICON_TYPES,
 	MAP_MARKER_TITLES
 } from '../../utils/constants';
-import { getIcon } from '../../utils';
+import { getIcon, isAddressValid } from '../../utils';
 import Form from '../form';
 import LoadingState from '../loadingState';
 import './app.sass';
@@ -23,6 +23,7 @@ const INITIAL_FORM_STATE = {
 
 function App() {
 	const [editedItem, setEditedItem] = useState(null);
+	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [initialLoading, setInitialLoading] = useState(true);
 	const [map, setMap] = useState(null);
@@ -34,6 +35,18 @@ function App() {
 	const mapRef = useRef();
 
 	const { getGeocode, data, loading, error } = useGeocodeQuery();
+
+	function validateForm() {
+		const isValid = Object.keys(formState).every(key => {
+			const { value } = formState[key];
+			return !!(value.trim() && isAddressValid(value));
+		});
+
+		if (isValid) {
+			return setEnableFormButton(true);
+		}
+		return setEnableFormButton(false);
+	}
 
 	useEffect(() => {
 		try {
@@ -70,6 +83,10 @@ function App() {
 						icon: getIcon(editedItem, ICON_TYPES.success)
 					}
 				});
+
+				if (validateForm(formState)) {
+					setEnableFormButton(true);
+				}
 			} catch (err) {
 				console.error(err);
 			}
@@ -85,6 +102,7 @@ function App() {
 					icon: getIcon(editedItem, ICON_TYPES.error)
 				}
 			});
+			setEnableFormButton(false);
 		}
 	}, [data, loading, error]);
 
@@ -92,8 +110,11 @@ function App() {
 		const { name, value } = ev.target;
 		setEditedItem(name);
 		if (value.trim()) {
-			getGeocode({ variables: { address: formState[name].value } });
+			return getGeocode({
+				variables: { address: formState[name].value }
+			});
 		}
+		return setEnableFormButton(false);
 	};
 
 	const handleItemChange = ev => {
@@ -116,6 +137,7 @@ function App() {
 					value
 				}
 			});
+			setEnableFormButton(false);
 		}
 	};
 
@@ -126,6 +148,7 @@ function App() {
 				<LoadingState />
 			) : (
 				<Form
+					enableFormButton={enableFormButton}
 					formState={formState}
 					onItemBlur={handleItemBlur}
 					onItemChange={handleItemChange}

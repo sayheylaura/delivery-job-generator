@@ -19,7 +19,7 @@ const items = [
 	}
 ];
 
-function Form({ formState, onItemBlur, onItemChange }) {
+function Form({ enableFormButton, formState, onItemBlur, onItemChange }) {
 	return (
 		<form className="form">
 			{items.map(({ id, label, name, placeholder }) => {
@@ -40,6 +40,7 @@ function Form({ formState, onItemBlur, onItemChange }) {
 			})}
 			<Button
 				className="form__button-submit"
+				disabled={!enableFormButton}
 				onClick={() => {}}
 				text="Create job"
 				type="submit"
@@ -49,6 +50,7 @@ function Form({ formState, onItemBlur, onItemChange }) {
 }
 
 Form.propTypes = {
+	enableFormButton: PropTypes.bool.isRequired,
 	formState: PropTypes.shape({
 		dropoffAddress: PropTypes.shape({
 			icon: PropTypes.shape({
