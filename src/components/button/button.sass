@@ -11,7 +11,17 @@
   cursor: pointer
   font-weight: $font-weight--black
   height: rem(40)
+  transition: box-shadow .2s ease-in-out, opacity .3s ease-in-out
 
-  &--loading
-    opacity: .5
+  &--loading,
+  &[disabled]
+    opacity: 50%
     pointer-events: none
+
+  &:focus-visible,
+  &[type='submit']:focus-visible
+    box-shadow: 0 1px 2px 0 rgba($primary, .3), 0 5px 15px rgba($black, .3)
+    outline: none
+
+  &:hover
+    opacity: 85%
