@@ -1,15 +1,15 @@
-@use '../abstracts/variables' as *
+@use '../utils/variables' as *
 
-$get-path-typography: 'assets/fonts'
+$font-files-path: 'assets/fonts'
 
-=font-face($typography-path, $font-family, $font-weight)
+=font-face($file-path, $font-family, $font-weight)
   @font-face
     font-family: $font-family
-    src: url('#{$typography-path}.woff2') format('woff2'), url('#{$typography-path}.woff') format('woff')
+    src: url('#{$file-path}.woff2') format('woff2'), url('#{$file-path}.woff') format('woff')
     -webkit-font-smoothing: antialiased
     font-display: swap
     font-style: normal
     font-weight: $font-weight
 
-+font-face('#{$get-path-typography}/Roboto-Regular/Roboto-Regular', $local-font-family--default, $font-weight--regular)
-+font-face('#{$get-path-typography}/Roboto-Black/Roboto-Black', $local-font-family--default, $font-weight--black)
++font-face('#{$font-files-path}/Roboto-Regular/Roboto-Regular', $local-font-family--default, $font-weight--regular)
++font-face('#{$font-files-path}/Roboto-Black/Roboto-Black', $local-font-family--default, $font-weight--black)

@@ -1,14 +1,15 @@
-@use '../../assets/styles/abstracts/functions' as *
-@use '../../assets/styles/abstracts/variables' as *
+@use '../../assets/styles/utils/functions' as *
+@use '../../assets/styles/utils/variables' as *
 
-.form-item__wrapper
-  align-items: center
-  display: flex
+.form-item
+  &__wrapper
+    align-items: center
+    display: flex
 
-.form-item__icon
-  height: rem(32)
-  margin-right: rem($margin--xs)
-  width: rem(32)
+  &__icon
+    height: rem(32)
+    margin-right: rem($margin--xs)
+    width: rem(32)
 
-.form-item__input--flex-grow
-  flex-grow: 1
+  &__input--flex-grow
+    flex-grow: 1
