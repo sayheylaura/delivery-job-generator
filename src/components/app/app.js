@@ -5,6 +5,7 @@ import Toaster from '../toaster';
 import {
 	createMapMarker,
 	initializeGoogleMap,
+	removeMapMarker,
 	useGeocodeQuery,
 	usePostJobMutation
 } from './services';
@@ -13,7 +14,7 @@ import {
 	ICON_TYPES,
 	MAP_MARKER_TITLES
 } from './utils/constants';
-import { getIcon, isAddressValid } from './utils';
+import { getIcon, validateForm } from './utils';
 import './app.sass';
 
 const INITIAL_FORM_STATE = {
@@ -32,7 +33,7 @@ function App() {
 	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [initialLoading, setInitialLoading] = useState(true);
-	const [map, setMap] = useState(null);
+	const [googleMap, setGoogleMap] = useState(null);
 	const [mapMarkers, setMapMarkers] = useState({
 		pickupAddress: null,
 		dropoffAddress: null
@@ -44,23 +45,11 @@ function App() {
 	const { getGeocode, data, loading, error } = useGeocodeQuery();
 	const { mutate, loading: creating } = usePostJobMutation();
 
-	function validateForm() {
-		const isValid = Object.keys(formState).every(key => {
-			const { value } = formState[key];
-			return !!(value.trim() && isAddressValid(value));
-		});
-
-		if (isValid) {
-			return setEnableFormButton(true);
-		}
-		return setEnableFormButton(false);
-	}
-
 	useEffect(() => {
 		try {
 			initializeGoogleMap(mapRef.current).then(gmap => {
+				setGoogleMap(gmap);
 				setInitialLoading(false);
-				setMap(gmap);
 			});
 		} catch (err) {
 			console.error(err);
@@ -74,7 +63,7 @@ function App() {
 			try {
 				const mapMarker = createMapMarker(
 					getIcon(editedItem, ICON_TYPES.mapMarker),
-					map,
+					googleMap,
 					{ lat, lng },
 					MAP_MARKER_TITLES[editedItem]
 				);
@@ -92,17 +81,20 @@ function App() {
 					}
 				});
 
-				if (validateForm(formState)) {
-					setEnableFormButton(true);
-				}
+				validateForm(formState) && setEnableFormButton(true);
 			} catch (err) {
 				console.error(err);
 			}
-
-			return;
 		}
+
 		if (error) {
-			mapMarkers[editedItem] && mapMarkers[editedItem].setMap(null);
+			removeMapMarker(mapMarkers[editedItem]);
+
+			setMapMarkers({
+				...mapMarkers,
+				[editedItem]: null
+			});
+
 			setFormState({
 				...formState,
 				[editedItem]: {
@@ -110,24 +102,16 @@ function App() {
 					icon: getIcon(editedItem, ICON_TYPES.error)
 				}
 			});
+
 			setEnableFormButton(false);
 		}
 	}, [data, loading, error]);
 
-	const handleItemBlur = ev => {
+	function handleItemChange(ev) {
 		const { name, value } = ev.target;
-		setEditedItem(name);
-		if (value.trim()) {
-			return getGeocode({
-				variables: { address: formState[name].value }
-			});
-		}
-		return setEnableFormButton(false);
-	};
 
-	const handleItemChange = ev => {
-		const { name, value } = ev.target;
 		setEditedItem(name);
+
 		setFormState({
 			...formState,
 			[name]: {
@@ -135,21 +119,42 @@ function App() {
 				value
 			}
 		});
+	}
 
-		if (!value.trim()) {
-			mapMarkers[name] && mapMarkers[name].setMap(null);
+	function handleItemBlur(ev) {
+		const { name, value } = ev.target;
+
+		setEditedItem(name);
+
+		if (value.trim()) {
+			try {
+				getGeocode({
+					variables: { address: formState[name].value }
+				});
+			} catch (err) {
+				console.error(err);
+			}
+		} else {
+			removeMapMarker(mapMarkers[name]);
+
+			setMapMarkers({
+				...mapMarkers,
+				[name]: null
+			});
+
 			setFormState({
 				...formState,
-				[editedItem]: {
-					icon: getIcon(editedItem, ICON_TYPES.blank),
-					value
+				[name]: {
+					...formState[name],
+					icon: getIcon(name, ICON_TYPES.blank)
 				}
 			});
+
 			setEnableFormButton(false);
 		}
-	};
+	}
 
-	const handleClickCreateButton = async () => {
+	async function handleClickCreateButton() {
 		try {
 			await mutate({
 				variables: {
@@ -159,7 +164,12 @@ function App() {
 			});
 
 			Object.keys(formState).forEach(key => {
-				return mapMarkers[key] && mapMarkers[key].setMap(null);
+				removeMapMarker(mapMarkers[key]);
+			});
+
+			setMapMarkers({
+				pickupAddress: null,
+				dropoffAddress: null
 			});
 
 			setFormState(INITIAL_FORM_STATE);
@@ -169,7 +179,7 @@ function App() {
 			setEnableFormButton(false);
 			setShowToaster(true);
 		}
-	};
+	}
 
 	return (
 		<main className="app">

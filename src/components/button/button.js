@@ -17,13 +17,13 @@ function Button({
 	text,
 	type
 }) {
-	const handleOnClick = ev => {
-		ev.preventDefault();
-		onClick();
-	};
-
 	function getButtonCategory() {
 		return BUTTON_CATEGORIES[category];
+	}
+
+	function handleOnClick(ev) {
+		ev.preventDefault();
+		onClick();
 	}
 
 	return (

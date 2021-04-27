@@ -13,13 +13,13 @@ function InputText({
 	placeholder,
 	value
 }) {
-	const handleOnBlur = ev => {
-		onBlur(ev, id);
-	};
+	function handleChange(ev) {
+		onChange(ev);
+	}
 
-	const handleChange = ev => {
-		onChange(ev, id);
-	};
+	function handleOnBlur(ev) {
+		onBlur(ev);
+	}
 
 	return (
 		<>
