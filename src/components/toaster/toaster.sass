@@ -1,0 +1,17 @@
+@use '../../assets/styles/abstracts/functions' as *
+@use '../../assets/styles/abstracts/variables' as *
+
+.toaster
+  animation: slidein 1s forwards
+  padding: 0 rem($margin--s)
+  position: absolute
+  right: rem(-300)
+  top: rem(32)
+  z-index: 1
+
+@keyframes slidein
+  from
+    right: rem(-300)
+
+  to
+    right: rem(32)

@@ -3,25 +3,33 @@
 @use '../../assets/styles/abstracts/variables' as *
 
 .btn
-  background: linear-gradient($primary, $accent)
   border: transparent
-  border-radius: rem($border-radius--xs)
-  box-shadow: 0 1px 2px 0 rgba($primary, .3)
   color: $white
   cursor: pointer
-  font-weight: $font-weight--black
   height: rem(40)
-  transition: box-shadow .2s ease-in-out, opacity .3s ease-in-out
+
+  &--primary
+    background: linear-gradient($primary, $accent)
+    border-radius: rem($border-radius--xs)
+    box-shadow: 0 1px 2px 0 rgba($primary, .3)
+    font-weight: $font-weight--black
+    transition: box-shadow .2s ease-in-out, opacity .3s ease-in-out
+
+    &:hover
+      opacity: 85%
+
+    &:focus-visible,
+    &[type='submit']:focus-visible
+      box-shadow: 0 1px 2px 0 rgba($primary, .3), 0 5px 15px rgba($black, .3)
+      outline: none
+
+  &--secondary
+    background-color: rgba($dark-1, .9)
+    border-radius: rem($border-radius--s)
+    box-shadow: 0 1px 2px 0 rgba($black, .1), 0 1px 8px 0 rgba($black, .1)
+    font-weight: $font-weight--regular
 
   &--loading,
   &[disabled]
     opacity: 50%
     pointer-events: none
-
-  &:focus-visible,
-  &[type='submit']:focus-visible
-    box-shadow: 0 1px 2px 0 rgba($primary, .3), 0 5px 15px rgba($black, .3)
-    outline: none
-
-  &:hover
-    opacity: 85%

@@ -3,6 +3,11 @@ const ADDRESS_TYPES = {
 	dropoffAddress: 'dropoffAddress'
 };
 
+const BUTTON_CATEGORIES = {
+	primary: 'primary',
+	secondary: 'secondary'
+};
+
 const ICON_TYPES = {
 	blank: 'blank',
 	error: 'error',
@@ -21,6 +26,7 @@ const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 
 export {
 	ADDRESS_TYPES,
+	BUTTON_CATEGORIES,
 	ICON_TYPES,
 	INITIAL_COORDINATES,
 	MAP_MARKER_TITLES,

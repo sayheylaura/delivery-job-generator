@@ -47,6 +47,7 @@ function Form({
 			})}
 			<Button
 				className="form__button-submit"
+				category="primary"
 				disabled={!enableFormButton}
 				loading={creating}
 				onClick={onClickCreateButton}

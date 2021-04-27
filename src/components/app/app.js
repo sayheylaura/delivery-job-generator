@@ -13,6 +13,7 @@ import {
 import { getIcon, isAddressValid } from '../../utils';
 import Form from '../form';
 import LoadingState from '../loadingState';
+import Toaster from '../toaster';
 import './app.sass';
 
 const INITIAL_FORM_STATE = {
@@ -36,6 +37,7 @@ function App() {
 		pickupAddress: null,
 		dropoffAddress: null
 	});
+	const [showToaster, setShowToaster] = useState(false);
 
 	const mapRef = useRef();
 
@@ -163,6 +165,9 @@ function App() {
 			setFormState(INITIAL_FORM_STATE);
 		} catch (err) {
 			console.error(err);
+		} finally {
+			setEnableFormButton(false);
+			setShowToaster(true);
 		}
 	};
 
@@ -172,14 +177,19 @@ function App() {
 			{initialLoading ? (
 				<LoadingState />
 			) : (
-				<Form
-					creating={creating}
-					enableFormButton={enableFormButton}
-					formState={formState}
-					onClickCreateButton={handleClickCreateButton}
-					onItemBlur={handleItemBlur}
-					onItemChange={handleItemChange}
-				/>
+				<>
+					<Form
+						creating={creating}
+						enableFormButton={enableFormButton}
+						formState={formState}
+						onClickCreateButton={handleClickCreateButton}
+						onItemBlur={handleItemBlur}
+						onItemChange={handleItemChange}
+					/>
+					{showToaster && (
+						<Toaster onClick={() => setShowToaster(false)} />
+					)}
+				</>
 			)}
 		</main>
 	);
