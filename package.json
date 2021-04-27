@@ -4,10 +4,9 @@
 	"description": "",
 	"private": true,
 	"scripts": {
-		"build": "webpack -c webpack.prod.js",
 		"deps:install": "npx yarn install --pure-lockfile",
 		"eslint": "npx eslint",
-		"start": "webpack serve --progress --open -c webpack.dev.js",
+		"start": "webpack serve --progress --open",
 		"stylelint": "npx stylelint ./src/**/*.sass -s sass -q"
 	},
 	"author": "",
@@ -29,7 +28,6 @@
 		"@babel/preset-react": "^7.13.13",
 		"babel-loader": "^8.2.2",
 		"css-loader": "^5.2.2",
-		"css-minimizer-webpack-plugin": "^2.0.0",
 		"dotenv": "^8.2.0",
 		"eslint": "^7.24.0",
 		"eslint-config-airbnb": "^18.2.1",
@@ -41,7 +39,6 @@
 		"eslint-plugin-react-hooks": "^4.2.0",
 		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^5.3.1",
-		"mini-css-extract-plugin": "^1.5.0",
 		"prettier": "^2.2.1",
 		"sass": "^1.32.11",
 		"sass-loader": "^11.0.1",
@@ -53,8 +50,7 @@
 		"svg-sprite-loader": "^6.0.6",
 		"webpack": "^5.33.2",
 		"webpack-cli": "^4.6.0",
-		"webpack-dev-server": "4.0.0-beta.2",
-		"webpack-merge": "^5.7.3"
+		"webpack-dev-server": "4.0.0-beta.2"
 	},
 	"browserslist": [
 		"defaults",

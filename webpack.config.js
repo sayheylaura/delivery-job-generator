@@ -13,6 +13,12 @@ module.exports = {
 		path: path.resolve(__dirname, './dist'),
 		clean: true
 	},
+	mode: 'development',
+	devtool: 'inline-source-map',
+	devServer: {
+		static: [path.resolve(__dirname, './dist')],
+		port: 3000
+	},
 	module: {
 		rules: [
 			{
@@ -26,6 +32,11 @@ module.exports = {
 						plugins: ['@babel/plugin-transform-runtime']
 					}
 				}
+			},
+			{
+				test: /\.sass$/i,
+				exclude: /(node_modules)/,
+				use: ['style-loader', 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.svg$/,
@@ -57,13 +68,14 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, './public/index.html'),
-			favicon: path.resolve(__dirname, './public/favicon-32x32.png')
+			favicon: path.resolve(__dirname, './public/favicon-32x32.png'),
+			template: path.resolve(__dirname, './public/index.html')
 		}),
 		new SpriteLoaderPlugin(),
 		new webpack.DefinePlugin({
 			'process.env.API_KEY': JSON.stringify(envVariables.API_KEY),
 			'process.env.API_URL': JSON.stringify(envVariables.API_URL)
-		})
+		}),
+		new webpack.HotModuleReplacementPlugin()
 	]
 };
