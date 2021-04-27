@@ -1,4 +1,4 @@
-import { VALID_ADDRESSES } from './constants';
+const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 
 function isAddressValid(address) {
 	return VALID_ADDRESSES.some(ad => {

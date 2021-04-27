@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BUTTON_CATEGORIES } from '../../utils/constants';
-import { joinClassNames } from '../../utils';
+import joinClassNames from '../../utils/joinClassNames';
 import './button.sass';
+
+const BUTTON_CATEGORIES = {
+	primary: 'primary',
+	secondary: 'secondary'
+};
 
 function Button({
 	category,

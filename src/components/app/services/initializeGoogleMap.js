@@ -1,7 +1,8 @@
 import { Loader } from '@googlemaps/js-api-loader';
-import { INITIAL_COORDINATES } from '../utils/constants';
 
-async function getMap(element) {
+const INITIAL_COORDINATES = { lat: 48.864961, lng: 2.320186 };
+
+async function initializeGoogleMap(element) {
 	const loader = new Loader({
 		apiKey: process.env.API_KEY,
 		version: 'weekly'
@@ -18,4 +19,4 @@ async function getMap(element) {
 	return map;
 }
 
-export default getMap;
+export default initializeGoogleMap;

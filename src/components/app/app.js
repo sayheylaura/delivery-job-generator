@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Form from '../form';
+import LoadingState from '../loadingState';
+import Toaster from '../toaster';
 import {
 	createMapMarker,
-	getMap,
+	initializeGoogleMap,
 	useGeocodeQuery,
 	usePostJobMutation
-} from '../../services';
+} from './services';
 import {
 	ADDRESS_TYPES,
 	ICON_TYPES,
 	MAP_MARKER_TITLES
-} from '../../utils/constants';
-import { getIcon, isAddressValid } from '../../utils';
-import Form from '../form';
-import LoadingState from '../loadingState';
-import Toaster from '../toaster';
+} from './utils/constants';
+import { getIcon, isAddressValid } from './utils';
 import './app.sass';
 
 const INITIAL_FORM_STATE = {
@@ -58,7 +58,7 @@ function App() {
 
 	useEffect(() => {
 		try {
-			getMap(mapRef.current).then(gmap => {
+			initializeGoogleMap(mapRef.current).then(gmap => {
 				setInitialLoading(false);
 				setMap(gmap);
 			});

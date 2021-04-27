@@ -1,6 +1,11 @@
 import createMapMarker from './createMapMarker';
-import getMap from './getMap';
+import initializeGoogleMap from './initializeGoogleMap';
 import useGeocodeQuery from './useGeocodeQuery';
 import usePostJobMutation from './usePostJobMutation';
 
-export { createMapMarker, getMap, useGeocodeQuery, usePostJobMutation };
+export {
+	createMapMarker,
+	initializeGoogleMap,
+	useGeocodeQuery,
+	usePostJobMutation
+};
