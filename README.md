@@ -119,6 +119,18 @@ The current private API only accepts two valid addresses, which you can find in 
 const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 ```
 
+### Available scripts
+
+-   **`build`**: executes webpack. **WARNING**: the current webpack config is not optimized for production.
+
+-   **`deps:install`**: installs dependencies with Yarn.
+
+-   **`eslint`**: executes ESLint.
+
+-   **`start`**: launches the webpack dev server, configured with Hot Module Replacement.
+
+-   **`stylelint`**: executes Stylelint.
+
 ### Technical decisions
 
 -   React architecture (loosely) [based on file type](https://reboot.studio/blog/folder-structures-to-organize-react-project/#structure-based-on-file-type).
