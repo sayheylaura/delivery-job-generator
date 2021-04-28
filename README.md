@@ -125,6 +125,7 @@ const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 -   Sass architecture based on the [7-1 pattern](https://itnext.io/structuring-your-sass-projects-c8d41fa55ed4).
 -   ESLint configuration based on the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript).
 -   Due to the private nature of the API used to geocode and post the delivery job, the project is not ready to be deployed to production, therefore only development webpack config was created.
+-   The project was bootstraped with a [personal template](https://github.com/lauraferrandof/react-project-boilerplate) I created. The template is a work in progress, so I had to make some modifications as I worked through the project.
 
 ## Roadmap
 
