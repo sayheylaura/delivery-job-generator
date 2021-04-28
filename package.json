@@ -1,7 +1,7 @@
 {
-	"name": "pickup-job-generator",
+	"name": "delivery-job-generator",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Create delivery jobs on Google Maps",
 	"private": true,
 	"scripts": {
 		"deps:install": "npx yarn install --pure-lockfile",
@@ -9,7 +9,7 @@
 		"start": "webpack serve --progress --open",
 		"stylelint": "npx stylelint ./src/**/*.sass -s sass -q"
 	},
-	"author": "",
+	"author": "Laura Ferrando",
 	"license": "MIT",
 	"dependencies": {
 		"@apollo/client": "^3.3.15",
