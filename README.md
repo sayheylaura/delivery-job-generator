@@ -165,9 +165,13 @@ Any contributions you make are **greatly appreciated**!
 
 Or [open an issue](https://github.com/lauraferrandof/delivery-job-generator/issues) if you spot a bug :)
 
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
 ## Contact
 
-Laura Ferrando - [LinkedIn](https://www.linkedin.com/in/lauraferrandof/) - lauraferrandof@gmail.com
+Laura Ferrando Ferrero - [LinkedIn](https://www.linkedin.com/in/lauraferrandof/) - lauraferrandof@gmail.com
 
 ## Acknowledgements
 
