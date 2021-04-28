@@ -69,7 +69,7 @@ When the user clicks on "Create a job", another request to the private API is se
 1. Clone the repo
 
     ```sh
-    git clone https://github.com/lauraferrandof/pickup-job-generator.git
+    git clone https://github.com/lauraferrandof/delivery-job-generator.git
     ```
 
 2. Install dependencies
@@ -145,7 +145,7 @@ Any contributions you make are **greatly appreciated**!
 4. Push to the Branch (`git push -u origin feature/AmazingFeature`)
 5. Open a Pull Request against the parent Project
 
-Or [open an issue](https://github.com/lauraferrandof/pickup-job-generator/issues) if you spot a bug :)
+Or [open an issue](https://github.com/lauraferrandof/delivery-job-generator/issues) if you spot a bug :)
 
 ## Contact
 
