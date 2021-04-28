@@ -41,6 +41,7 @@ module.exports = {
 			{
 				test: /\.svg$/,
 				include: path.resolve(__dirname, './src/assets/images/sprite'),
+				exclude: /(node_modules)/,
 				loader: 'svg-sprite-loader',
 				options: {
 					extract: true,
@@ -50,7 +51,10 @@ module.exports = {
 			{
 				test: /\.svg$/,
 				include: path.resolve(__dirname, './src/assets/images'),
-				exclude: path.resolve(__dirname, './src/assets/images/sprite'),
+				exclude: [
+					/(node_modules)/,
+					path.resolve(__dirname, './src/assets/images/sprite')
+				],
 				loader: 'file-loader',
 				options: {
 					name: 'assets/images/[name].[ext]'
@@ -59,6 +63,7 @@ module.exports = {
 			{
 				test: /\.(woff|woff2)$/,
 				include: path.resolve(__dirname, './src/assets/fonts'),
+				exclude: /(node_modules)/,
 				loader: 'file-loader',
 				options: {
 					name: 'assets/fonts/[name].[ext]'
