@@ -134,6 +134,7 @@ const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 -   [ ] Add tests with [Jest](https://jestjs.io/) and [Testing Library](https://testing-library.com/)
 -   [ ] Improve loading experience
 -   [ ] Add error screen
+-   [ ] Performance and accessibility checks
 -   [ ] Create a pipeline with GitHub Actions
 -   [ ] Add CSS transitions and animations
 -   [ ] Refactor to [TypeScript](https://www.typescriptlang.org/)
