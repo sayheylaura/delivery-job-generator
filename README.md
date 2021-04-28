@@ -21,12 +21,13 @@
     </li>
     <li><a href="#usage">Usage</a></li>
       <ul>
+        <li><a href="#available-scripts">Available scripts</a></li>
         <li><a href="#technical-decisions">Technical decisions</a></li>
       </ul>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
