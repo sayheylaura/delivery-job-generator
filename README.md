@@ -1,4 +1,4 @@
-# Pickup job generator 🚀
+# Delivery job generator 🚀
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -28,7 +28,7 @@
 
 ## About the project
 
-The Pickup Job Generator allows the user to create a delivery job by choosing pick up and drop off addresses. It leverages the [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/overview) to load Google Maps positioned at Paris, France.
+The Delivery Job Generator allows the user to create a delivery job by choosing pick up and drop off addresses. It leverages the [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/overview) to load Google Maps positioned at Paris, France.
 
 ![First load of the project screenshot][first-load-screenshot]
 
