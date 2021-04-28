@@ -4,6 +4,7 @@
 	"description": "Create delivery jobs on Google Maps",
 	"private": true,
 	"scripts": {
+		"build": "webpack",
 		"deps:install": "npx yarn install --pure-lockfile",
 		"eslint": "npx eslint",
 		"start": "webpack serve --progress --open",
