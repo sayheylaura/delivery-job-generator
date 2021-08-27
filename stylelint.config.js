@@ -16,6 +16,11 @@ module.exports = {
 		'declaration-block-trailing-semicolon': 'never',
 		'number-leading-zero': 'never',
 		'order/properties-alphabetical-order': true,
-		'rule-empty-line-before': 'always'
+		'rule-empty-line-before': [
+			'always',
+			{
+				ignore: ['after-comment']
+			}
+		]
 	}
 };
