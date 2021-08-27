@@ -45,8 +45,13 @@
     box-shadow: 0 -2em
     height: 5em
 
-@media (prefers-reduced-motion)
-  .loading-state,
-  .loading-state::before,
-  .loading-state::after
-    animation-name: dissolve
+
+=no-animation
+  // wrapped inside a mixin to avoid a stylelint issue (see https://github.com/stylelint/stylelint/issues/4865)
+  @media (prefers-reduced-motion: reduce)
+    .loading-state,
+    .loading-state::before,
+    .loading-state::after
+      animation: none
+
++no-animation
