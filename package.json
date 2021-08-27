@@ -6,9 +6,9 @@
 	"scripts": {
 		"build": "webpack",
 		"deps:install": "npx yarn install --pure-lockfile",
-		"eslint": "npx eslint",
+		"eslint": "eslint",
 		"start": "webpack serve --progress --open",
-		"stylelint": "npx stylelint ./src/**/*.sass -s sass -q"
+		"stylelint": "stylelint ./src/**/*.sass -s sass -q"
 	},
 	"author": "Laura Ferrando",
 	"license": "MIT",
