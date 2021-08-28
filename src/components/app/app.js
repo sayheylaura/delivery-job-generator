@@ -8,13 +8,15 @@ import {
 	createMapMarker,
 	initializeGoogleMap,
 	removeMapMarker,
+	useForm,
 	useGeocodeQuery,
 	usePostJobMutation
 } from './services';
 import {
 	ADDRESS_TYPES,
 	ICON_TYPES,
-	MAP_MARKER_TITLES
+	MAP_MARKER_TITLES,
+	STATES
 } from './utils/constants';
 import { getIcon, validateForm } from './utils';
 
@@ -35,32 +37,37 @@ function App() {
 	const [editedItem, setEditedItem] = useState(null);
 	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
-	const [initialLoading, setInitialLoading] = useState(true);
-	const [googleMap, setGoogleMap] = useState(null);
 	const [mapMarkers, setMapMarkers] = useState({
 		pickupAddress: null,
 		dropoffAddress: null
 	});
 	const [showToaster, setShowToaster] = useState(false);
 
+	const {
+		actions: { onMapLoaded, onMapLoadError },
+		googleMap,
+		status
+	} = useForm();
+
+	const loading = status === STATES.map_loading;
+
 	const mapRef = useRef();
 
-	const { getGeocode, data, loading, error } = useGeocodeQuery();
+	const { getGeocode, data, loading: geocoding, error } = useGeocodeQuery();
 	const { mutate, loading: creating } = usePostJobMutation();
 
 	useEffect(() => {
 		try {
 			initializeGoogleMap(mapRef.current).then(gmap => {
-				setGoogleMap(gmap);
-				setInitialLoading(false);
+				onMapLoaded(gmap);
 			});
-		} catch (err) {
-			console.error(err);
+		} catch {
+			onMapLoadError();
 		}
 	}, []);
 
 	useEffect(() => {
-		if (data && !loading && !error) {
+		if (data && !geocoding && !error) {
 			const { latitude: lat, longitude: lng } = data?.geocode;
 
 			try {
@@ -108,7 +115,7 @@ function App() {
 
 			setEnableFormButton(false);
 		}
-	}, [data, loading, error]);
+	}, [data, geocoding, error]);
 
 	function handleItemChange(ev) {
 		const { name, value } = ev.target;
@@ -187,7 +194,7 @@ function App() {
 	return (
 		<main className="app">
 			<div className="map" ref={mapRef} />
-			{initialLoading ? (
+			{loading ? (
 				<LoadingState />
 			) : (
 				<>
