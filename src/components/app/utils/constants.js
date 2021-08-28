@@ -3,6 +3,11 @@ const ADDRESS_TYPES = {
 	dropoffAddress: 'dropoffAddress'
 };
 
+const EVENTS = {
+	MAP_LOAD_RESOLVE: 'map_load_resolve',
+	MAP_LOAD_REJECT: 'map_load_reject'
+};
+
 const ICON_TYPES = {
 	blank: 'blank',
 	error: 'error',
@@ -15,4 +20,9 @@ const MAP_MARKER_TITLES = {
 	dropoffAddress: 'Drop off address'
 };
 
-export { ADDRESS_TYPES, ICON_TYPES, MAP_MARKER_TITLES };
+const STATES = {
+	idle: 'idle',
+	map_loading: 'map_loading'
+};
+
+export { ADDRESS_TYPES, EVENTS, ICON_TYPES, MAP_MARKER_TITLES, STATES };
