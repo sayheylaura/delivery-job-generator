@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 import createMapMarker from './createMapMarker';
 import removeMapMarker from './removeMapMarker';
@@ -10,7 +10,7 @@ import {
 	MAP_MARKER_TITLES,
 	STATES
 } from '../utils/constants';
-import { formReducer, getIcon } from '../utils';
+import { formReducer, getIcon, validateForm } from '../utils';
 
 const initialState = {
 	form: {
@@ -35,7 +35,18 @@ function useForm() {
 	const [state, dispatch] = useReducer(formReducer, initialState);
 	const { form, googleMap, status } = state;
 
+	const [enableFormButton, setEnableFormButton] = useState(false);
+
 	const geocode = useGeocodeQuery();
+
+	useEffect(() => {
+		const validationTimeout = setTimeout(() => {
+			const isFormValid = validateForm(form);
+			setEnableFormButton(isFormValid);
+		}, 500);
+
+		return () => clearTimeout(validationTimeout);
+	}, [form]);
 
 	function handleMapLoaded(gmap) {
 		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: gmap });
@@ -115,6 +126,7 @@ function useForm() {
 			onMapLoaded: handleMapLoaded,
 			onMapLoadError: handleMapLoadError
 		},
+		enableFormButton,
 		form,
 		googleMap,
 		status
