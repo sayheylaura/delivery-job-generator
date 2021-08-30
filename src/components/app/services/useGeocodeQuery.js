@@ -1,4 +1,4 @@
-import { useLazyQuery, gql } from '@apollo/client';
+import { gql, useApolloClient } from '@apollo/client';
 
 const GEOCODE_QUERY = gql`
 	query geocode($address: String!) {
@@ -11,9 +11,18 @@ const GEOCODE_QUERY = gql`
 `;
 
 function useGeocodeQuery() {
-	const [getGeocode, { data, loading, error }] = useLazyQuery(GEOCODE_QUERY);
+	const client = useApolloClient();
 
-	return { getGeocode, data, loading, error };
+	async function geocode(address) {
+		const { data } = await client.query({
+			query: GEOCODE_QUERY,
+			variables: { address }
+		});
+
+		return data?.geocode;
+	}
+
+	return geocode;
 }
 
 export default useGeocodeQuery;

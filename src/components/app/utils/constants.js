@@ -4,7 +4,14 @@ const ADDRESS_TYPES = {
 };
 
 const EVENTS = {
+	CLEAR_FIELD: 'clear_field',
 	EDIT: 'edit',
+	GEOCODE: 'geocode',
+	GEOCODE_REJECT: 'geocode_reject',
+	GEOCODE_RESOLVE: 'geocode_resolve',
+	MAP_CREATE_MARKER: 'map_create_marker',
+	MAP_CREATE_MARKER_REJECT: 'map_create_marker_reject',
+	MAP_CREATE_MARKER_RESOLVE: 'map_create_marker_resolve',
 	MAP_LOAD_RESOLVE: 'map_load_resolve',
 	MAP_LOAD_REJECT: 'map_load_reject'
 };
@@ -22,8 +29,15 @@ const MAP_MARKER_TITLES = {
 };
 
 const STATES = {
+	geocode_error: 'geocode_error',
+	geocode_success: 'geocode.success',
+	geocoding: 'geocoding',
 	idle: 'idle',
-	map_loading: 'map_loading'
+	map_create_marker_error: 'map_create_marker_error',
+	map_create_marker_success: 'map_create_marker_success',
+	map_creating_marker: 'map_creating_marker',
+	map_loading: 'map_loading',
+	map_load_error: 'map_load_error'
 };
 
 export { ADDRESS_TYPES, EVENTS, ICON_TYPES, MAP_MARKER_TITLES, STATES };
