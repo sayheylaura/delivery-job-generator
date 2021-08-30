@@ -56,6 +56,17 @@ function useForm() {
 		return () => clearTimeout(geocodeTimeout);
 	}, [geocodeTimeout]);
 
+	useEffect(() => {
+		let toasterTimeout;
+		if (showToaster) {
+			toasterTimeout = setTimeout(() => {
+				dispatch({ type: EVENTS.TOASTER_CLOSE });
+			}, 5000);
+		}
+
+		return () => clearTimeout(toasterTimeout);
+	}, [showToaster]);
+
 	function handleMapLoaded(gmap) {
 		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: gmap });
 	}

@@ -2,7 +2,7 @@
 @use '../../assets/styles/utils/variables' as *
 
 .btn--toaster
-  animation: slidein 1s forwards
+  animation: slidein 1s 0s forwards, slideout 1s 4s forwards
   padding: 0 rem($margin--s)
   position: absolute
   top: rem(32)
@@ -14,3 +14,10 @@
 
   to
     right: rem(32)
+
+@keyframes slideout
+  from
+    right: rem(32)
+
+  to
+    right: rem(-300)
