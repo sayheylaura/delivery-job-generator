@@ -47,6 +47,13 @@ function formReducer(state, event) {
 				};
 			}
 
+			if (event.type === EVENTS.TOASTER_CLOSE) {
+				return {
+					...state,
+					showToaster: false
+				};
+			}
+
 			if (event.type === EVENTS.CLEAR_FIELD) {
 				const { blankIcon, name } = event.payload;
 
@@ -122,11 +129,25 @@ function formReducer(state, event) {
 					status: STATES.map_creating_marker
 				};
 			}
+
+			if (event.type === EVENTS.TOASTER_CLOSE) {
+				return {
+					...state,
+					showToaster: false
+				};
+			}
 			break;
 
 		case STATES.geocode_error:
 			if (event.type === EVENTS.EDIT) {
 				return handleItemChangeEvent(state, event);
+			}
+
+			if (event.type === EVENTS.TOASTER_CLOSE) {
+				return {
+					...state,
+					showToaster: false
+				};
 			}
 			break;
 
@@ -172,11 +193,25 @@ function formReducer(state, event) {
 					status: STATES.job_creating
 				};
 			}
+
+			if (event.type === EVENTS.TOASTER_CLOSE) {
+				return {
+					...state,
+					showToaster: false
+				};
+			}
 			break;
 
 		case STATES.map_create_marker_error:
 			if (event.type === EVENTS.EDIT) {
 				return handleItemChangeEvent(state, event);
+			}
+
+			if (event.type === EVENTS.TOASTER_CLOSE) {
+				return {
+					...state,
+					showToaster: false
+				};
 			}
 			break;
 

@@ -29,12 +29,13 @@ const initialState = {
 		}
 	},
 	googleMap: null,
+	showToaster: false,
 	status: STATES.map_loading
 };
 
 function useForm() {
 	const [state, dispatch] = useReducer(formReducer, initialState);
-	const { form, googleMap, status } = state;
+	const { form, googleMap, showToaster, status } = state;
 
 	const [enableFormButton, setEnableFormButton] = useState(false);
 
@@ -149,9 +150,14 @@ function useForm() {
 		}
 	}
 
+	function handleClickToaster() {
+		dispatch({ type: EVENTS.TOASTER_CLOSE });
+	}
+
 	return {
 		actions: {
 			onClickCreateButton: handleClickCreateButton,
+			onClickToaster: handleClickToaster,
 			onItemBlur: handleItemBlur,
 			onItemChange: handleItemChange,
 			onMapLoaded: handleMapLoaded,
@@ -160,6 +166,7 @@ function useForm() {
 		enableFormButton,
 		form,
 		googleMap,
+		showToaster,
 		status
 	};
 }
