@@ -16,7 +16,8 @@ const EVENTS = {
 	MAP_CREATE_MARKER_REJECT: 'map_create_marker_reject',
 	MAP_CREATE_MARKER_RESOLVE: 'map_create_marker_resolve',
 	MAP_LOAD_RESOLVE: 'map_load_resolve',
-	MAP_LOAD_REJECT: 'map_load_reject'
+	MAP_LOAD_REJECT: 'map_load_reject',
+	TOASTER_CLOSE: 'toaster_close'
 };
 
 const ICON_TYPES = {

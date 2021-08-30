@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import Form from '../form';
 import LoadingState from '../loadingState';
@@ -10,11 +10,10 @@ import { STATES } from './utils/constants';
 import './app.sass';
 
 function App() {
-	const [showToaster, setShowToaster] = useState(false);
-
 	const {
 		actions: {
 			onClickCreateButton,
+			onClickToaster,
 			onItemBlur,
 			onItemChange,
 			onMapLoaded,
@@ -22,6 +21,7 @@ function App() {
 		},
 		enableFormButton,
 		form,
+		showToaster,
 		status
 	} = useForm();
 
@@ -67,9 +67,7 @@ function App() {
 						onItemBlur={handleItemBlur}
 						onItemChange={handleItemChange}
 					/>
-					{showToaster && (
-						<Toaster onClick={() => setShowToaster(false)} />
-					)}
+					{showToaster && <Toaster onClick={onClickToaster} />}
 				</>
 			)}
 		</main>
