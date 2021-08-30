@@ -13,7 +13,6 @@ function FormItem({
 	id,
 	label,
 	name,
-	onBlur,
 	onChange,
 	placeholder,
 	value
@@ -36,7 +35,6 @@ function FormItem({
 				id={id}
 				label={label}
 				name={name}
-				onBlur={onBlur}
 				onChange={onChange}
 				placeholder={placeholder}
 				value={value}
@@ -58,7 +56,6 @@ FormItem.propTypes = {
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	onBlur: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired

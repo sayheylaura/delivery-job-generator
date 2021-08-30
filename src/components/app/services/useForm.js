@@ -38,6 +38,7 @@ function useForm() {
 	const { form, googleMap, showToaster, status } = state;
 
 	const [enableFormButton, setEnableFormButton] = useState(false);
+	const [geocodeTimeout, setGeocodeTimeout] = useState(null);
 
 	const geocode = useGeocodeQuery();
 	const { postJob } = usePostJobMutation();
@@ -50,6 +51,10 @@ function useForm() {
 
 		return () => clearTimeout(validationTimeout);
 	}, [form]);
+
+	useEffect(() => {
+		return () => clearTimeout(geocodeTimeout);
+	}, [geocodeTimeout]);
 
 	function handleMapLoaded(gmap) {
 		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: gmap });
@@ -101,25 +106,27 @@ function useForm() {
 		}
 	}
 
-	function handleItemBlur(name, value) {
-		dispatch({ type: EVENTS.GEOCODE });
-
-		if (value.trim()) {
-			getGeocode(name, value);
-		} else {
-			removeMapMarker(form[name].mapMarker);
-
-			const blankIcon = getIcon(name, ICON_TYPES.blank);
-
-			dispatch({
-				type: EVENTS.CLEAR_FIELD,
-				payload: { blankIcon, name }
-			});
-		}
-	}
-
 	function handleItemChange(name, value) {
+		if (geocodeTimeout) clearTimeout(geocodeTimeout);
+
 		dispatch({ type: EVENTS.EDIT, payload: { name, value } });
+
+		setGeocodeTimeout(
+			setTimeout(() => {
+				if (value.trim()) {
+					getGeocode(name, value);
+				} else {
+					removeMapMarker(form[name].mapMarker);
+
+					const blankIcon = getIcon(name, ICON_TYPES.blank);
+
+					dispatch({
+						type: EVENTS.CLEAR_FIELD,
+						payload: { blankIcon, name }
+					});
+				}
+			}, 500)
+		);
 	}
 
 	async function handleClickCreateButton() {
@@ -158,14 +165,12 @@ function useForm() {
 		actions: {
 			onClickCreateButton: handleClickCreateButton,
 			onClickToaster: handleClickToaster,
-			onItemBlur: handleItemBlur,
 			onItemChange: handleItemChange,
 			onMapLoaded: handleMapLoaded,
 			onMapLoadError: handleMapLoadError
 		},
 		enableFormButton,
 		form,
-		googleMap,
 		showToaster,
 		status
 	};

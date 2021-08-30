@@ -10,17 +10,12 @@ function InputText({
 	id,
 	label,
 	name,
-	onBlur,
 	onChange,
 	placeholder,
 	value
 }) {
 	function handleChange(ev) {
 		onChange(ev);
-	}
-
-	function handleOnBlur(ev) {
-		onBlur(ev);
 	}
 
 	return (
@@ -35,7 +30,6 @@ function InputText({
 				className={joinClassNames('input__field', className.input)}
 				id={id}
 				name={name}
-				onBlur={handleOnBlur}
 				onChange={handleChange}
 				placeholder={placeholder}
 				type="text"
@@ -53,7 +47,6 @@ InputText.propTypes = {
 	id: PropTypes.string.isRequired,
 	label: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	onBlur: PropTypes.func.isRequired,
 	onChange: PropTypes.func.isRequired,
 	placeholder: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired

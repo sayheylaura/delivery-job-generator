@@ -14,7 +14,6 @@ function App() {
 		actions: {
 			onClickCreateButton,
 			onClickToaster,
-			onItemBlur,
 			onItemChange,
 			onMapLoaded,
 			onMapLoadError
@@ -46,12 +45,6 @@ function App() {
 		onItemChange(name, value);
 	}
 
-	function handleItemBlur(ev) {
-		const { name, value } = ev.target;
-
-		onItemBlur(name, value);
-	}
-
 	return (
 		<main className="app">
 			<div className="map" ref={mapRef} />
@@ -64,7 +57,6 @@ function App() {
 						enableFormButton={enableFormButton}
 						form={form}
 						onClickCreateButton={onClickCreateButton}
-						onItemBlur={handleItemBlur}
 						onItemChange={handleItemChange}
 					/>
 					{showToaster && <Toaster onClick={onClickToaster} />}
