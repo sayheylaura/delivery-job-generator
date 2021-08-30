@@ -18,9 +18,9 @@ const POST_JOB_MUTATION = gql`
 `;
 
 function usePostJobMutation() {
-	const [mutate, { loading, error }] = useMutation(POST_JOB_MUTATION);
+	const [postJob, { loading, error }] = useMutation(POST_JOB_MUTATION);
 
-	return { mutate, loading, error };
+	return { postJob, loading, error };
 }
 
 export default usePostJobMutation;
