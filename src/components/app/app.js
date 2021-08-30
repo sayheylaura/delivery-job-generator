@@ -5,20 +5,13 @@ import LoadingState from '../loadingState';
 import Toaster from '../toaster';
 
 import {
-	createMapMarker,
 	initializeGoogleMap,
 	removeMapMarker,
 	useForm,
-	useGeocodeQuery,
 	usePostJobMutation
 } from './services';
-import {
-	ADDRESS_TYPES,
-	ICON_TYPES,
-	MAP_MARKER_TITLES,
-	STATES
-} from './utils/constants';
-import { getIcon, validateForm } from './utils';
+import { ADDRESS_TYPES, ICON_TYPES, STATES } from './utils/constants';
+import { getIcon } from './utils';
 
 import './app.sass';
 
@@ -34,7 +27,6 @@ const INITIAL_FORM_STATE = {
 };
 
 function App() {
-	const [editedItem, setEditedItem] = useState(null);
 	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [mapMarkers, setMapMarkers] = useState({
@@ -44,9 +36,8 @@ function App() {
 	const [showToaster, setShowToaster] = useState(false);
 
 	const {
-		actions: { onItemChange, onMapLoaded, onMapLoadError },
+		actions: { onItemBlur, onItemChange, onMapLoaded, onMapLoadError },
 		form,
-		googleMap,
 		status
 	} = useForm();
 
@@ -54,7 +45,6 @@ function App() {
 
 	const mapRef = useRef();
 
-	const { getGeocode, data, loading: geocoding, error } = useGeocodeQuery();
 	const { mutate, loading: creating } = usePostJobMutation();
 
 	useEffect(() => {
@@ -67,57 +57,6 @@ function App() {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (data && !geocoding && !error) {
-			const { latitude: lat, longitude: lng } = data?.geocode;
-
-			try {
-				const mapMarker = createMapMarker(
-					getIcon(editedItem, ICON_TYPES.mapMarker),
-					googleMap,
-					{ lat, lng },
-					MAP_MARKER_TITLES[editedItem]
-				);
-
-				setMapMarkers({
-					...mapMarkers,
-					[editedItem]: mapMarker
-				});
-
-				setFormState({
-					...formState,
-					[editedItem]: {
-						...formState[editedItem],
-						icon: getIcon(editedItem, ICON_TYPES.success)
-					}
-				});
-
-				validateForm(formState) && setEnableFormButton(true);
-			} catch (err) {
-				console.error(err);
-			}
-		}
-
-		if (error) {
-			removeMapMarker(mapMarkers[editedItem]);
-
-			setMapMarkers({
-				...mapMarkers,
-				[editedItem]: null
-			});
-
-			setFormState({
-				...formState,
-				[editedItem]: {
-					...formState[editedItem],
-					icon: getIcon(editedItem, ICON_TYPES.error)
-				}
-			});
-
-			setEnableFormButton(false);
-		}
-	}, [data, geocoding, error]);
-
 	function handleItemChange(ev) {
 		const { name, value } = ev.target;
 
@@ -127,34 +66,7 @@ function App() {
 	function handleItemBlur(ev) {
 		const { name, value } = ev.target;
 
-		setEditedItem(name);
-
-		if (value.trim()) {
-			try {
-				getGeocode({
-					variables: { address: formState[name].value }
-				});
-			} catch (err) {
-				console.error(err);
-			}
-		} else {
-			removeMapMarker(mapMarkers[name]);
-
-			setMapMarkers({
-				...mapMarkers,
-				[name]: null
-			});
-
-			setFormState({
-				...formState,
-				[name]: {
-					...formState[name],
-					icon: getIcon(name, ICON_TYPES.blank)
-				}
-			});
-
-			setEnableFormButton(false);
-		}
+		onItemBlur(name, value);
 	}
 
 	async function handleClickCreateButton() {

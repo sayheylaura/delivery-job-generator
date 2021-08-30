@@ -1,5 +1,15 @@
 import { useReducer } from 'react';
-import { ADDRESS_TYPES, EVENTS, ICON_TYPES, STATES } from '../utils/constants';
+
+import createMapMarker from './createMapMarker';
+import removeMapMarker from './removeMapMarker';
+import useGeocodeQuery from './useGeocodeQuery';
+import {
+	ADDRESS_TYPES,
+	EVENTS,
+	ICON_TYPES,
+	MAP_MARKER_TITLES,
+	STATES
+} from '../utils/constants';
 import { formReducer, getIcon } from '../utils';
 
 const initialState = {
@@ -25,6 +35,8 @@ function useForm() {
 	const [state, dispatch] = useReducer(formReducer, initialState);
 	const { form, googleMap, status } = state;
 
+	const geocode = useGeocodeQuery();
+
 	function handleMapLoaded(gmap) {
 		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: gmap });
 	}
@@ -33,12 +45,72 @@ function useForm() {
 		dispatch({ type: EVENTS.MAP_LOAD_REJECT });
 	}
 
+	async function setMapMarker(data, name) {
+		dispatch({ type: EVENTS.MAP_CREATE_MARKER });
+		const { latitude: lat, longitude: lng } = data;
+
+		try {
+			const mapMarker = await createMapMarker(
+				getIcon(name, ICON_TYPES.mapMarker),
+				googleMap,
+				{ lat, lng },
+				MAP_MARKER_TITLES[name]
+			);
+
+			const successIcon = getIcon(name, ICON_TYPES.success);
+
+			dispatch({
+				type: EVENTS.MAP_CREATE_MARKER_RESOLVE,
+				payload: { name, mapMarker, successIcon }
+			});
+		} catch {
+			dispatch({ type: EVENTS.MAP_CREATE_MARKER_REJECT });
+		}
+	}
+
+	async function getGeocode(name, value) {
+		dispatch({ type: EVENTS.GEOCODE });
+
+		try {
+			const data = await geocode(value);
+			dispatch({ type: EVENTS.GEOCODE_RESOLVE });
+			setMapMarker(data, name);
+		} catch {
+			removeMapMarker(form[name].mapMarker);
+
+			const errorIcon = getIcon(name, ICON_TYPES.error);
+
+			dispatch({
+				type: EVENTS.GEOCODE_REJECT,
+				payload: { errorIcon, name }
+			});
+		}
+	}
+
+	function handleItemBlur(name, value) {
+		dispatch({ type: EVENTS.GEOCODE });
+
+		if (value.trim()) {
+			getGeocode(name, value);
+		} else {
+			removeMapMarker(form[name].mapMarker);
+
+			const blankIcon = getIcon(name, ICON_TYPES.blank);
+
+			dispatch({
+				type: EVENTS.CLEAR_FIELD,
+				payload: { blankIcon, name }
+			});
+		}
+	}
+
 	function handleItemChange(name, value) {
 		dispatch({ type: EVENTS.EDIT, payload: { name, value } });
 	}
 
 	return {
 		actions: {
+			onItemBlur: handleItemBlur,
 			onItemChange: handleItemChange,
 			onMapLoaded: handleMapLoaded,
 			onMapLoadError: handleMapLoadError
