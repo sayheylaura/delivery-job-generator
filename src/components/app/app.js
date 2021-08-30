@@ -44,7 +44,8 @@ function App() {
 	const [showToaster, setShowToaster] = useState(false);
 
 	const {
-		actions: { onMapLoaded, onMapLoadError },
+		actions: { onItemChange, onMapLoaded, onMapLoadError },
+		form,
 		googleMap,
 		status
 	} = useForm();
@@ -120,15 +121,7 @@ function App() {
 	function handleItemChange(ev) {
 		const { name, value } = ev.target;
 
-		setEditedItem(name);
-
-		setFormState({
-			...formState,
-			[name]: {
-				...formState[name],
-				value
-			}
-		});
+		onItemChange(name, value);
 	}
 
 	function handleItemBlur(ev) {
@@ -201,7 +194,7 @@ function App() {
 					<Form
 						creating={creating}
 						enableFormButton={enableFormButton}
-						formState={formState}
+						form={form}
 						onClickCreateButton={handleClickCreateButton}
 						onItemBlur={handleItemBlur}
 						onItemChange={handleItemChange}
