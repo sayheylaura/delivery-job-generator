@@ -26,7 +26,6 @@ function Form({
 	enableFormButton,
 	form,
 	onClickCreateButton,
-	onItemBlur,
 	onItemChange
 }) {
 	return (
@@ -40,7 +39,6 @@ function Form({
 						key={id}
 						label={label}
 						name={name}
-						onBlur={onItemBlur}
 						onChange={onItemChange}
 						placeholder={placeholder}
 						value={form[name].value}
@@ -80,7 +78,6 @@ Form.propTypes = {
 		})
 	}).isRequired,
 	onClickCreateButton: PropTypes.func.isRequired,
-	onItemBlur: PropTypes.func.isRequired,
 	onItemChange: PropTypes.func.isRequired
 };
 
