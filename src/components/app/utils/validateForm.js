@@ -1,12 +1,10 @@
-import isAddressValid from './isAddressValid';
-
-function validateForm(state) {
-	const isValid = Object.keys(state).every(key => {
-		const { value } = state[key];
-		return !!(value.trim() && isAddressValid(value));
+function validateForm(form) {
+	const isFormValid = Object.keys(form).every(key => {
+		const { value, isValid } = form[key];
+		return !!(value.trim() && isValid);
 	});
 
-	return isValid;
+	return isFormValid;
 }
 
 export default validateForm;

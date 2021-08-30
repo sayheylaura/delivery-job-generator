@@ -27,7 +27,6 @@ const INITIAL_FORM_STATE = {
 };
 
 function App() {
-	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [mapMarkers, setMapMarkers] = useState({
 		pickupAddress: null,
@@ -37,6 +36,7 @@ function App() {
 
 	const {
 		actions: { onItemBlur, onItemChange, onMapLoaded, onMapLoadError },
+		enableFormButton,
 		form,
 		status
 	} = useForm();
@@ -91,7 +91,6 @@ function App() {
 		} catch (err) {
 			console.error(err);
 		} finally {
-			setEnableFormButton(false);
 			setShowToaster(true);
 		}
 	}
