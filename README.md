@@ -68,7 +68,7 @@ When the user clicks on "Create a job", another request to the private API is se
 
 -   Install [Node.js](https://nodejs.org/en/)
 -   Install [Git](https://www.git-scm.com/)
--   Create a project in the Google Cloud Console, enable the Maps JavaScript API and get an API key. [This tutorial](https://developers.google.com/maps/gmp-get-started) from the Google Maps Platform documentation will set you up un running!
+-   Create a project in the Google Cloud Console, enable the Maps JavaScript API and get an API key. [This tutorial](https://developers.google.com/maps/gmp-get-started) from the Google Maps Platform documentation will set you up and running!
 
 ### Installation
 
@@ -115,11 +115,10 @@ Or
 yarn start
 ```
 
-The current private API only accepts two valid addresses, which you can find in the `src/components/app/utils/isAddressValid.js` file:
+The current private API only accepts two valid addresses (case insensitive):
 
-```javascript
-const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
-```
+-   Pick up address ➡ 29 Rue du 4 Septembre
+-   Drop off address ➡ 15 Rue de Bourgogne
 
 ### Available scripts
 
@@ -143,9 +142,9 @@ const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 
 ## Roadmap
 
--   [ ] Geocode the addresses once the user stops typing, and not only on blur
--   [ ] Make the toaster disappear automatically after a few seconds
--   [ ] Implement a state reducer for state management (either with React Hooks or with [Redux](https://redux.js.org/))
+-   [x] Geocode the addresses once the user stops typing
+-   [x] Make the toaster disappear automatically after a few seconds
+-   [x] Implement a state reducer for state management (either with React Hooks or with [Redux](https://redux.js.org/))
 -   [ ] Add tests with [Jest](https://jestjs.io/) and [Testing Library](https://testing-library.com/)
 -   [ ] Improve loading experience
 -   [ ] Add error screen
@@ -159,11 +158,11 @@ const VALID_ADDRESSES = ['29 Rue du 4 Septembre', '15 Rue de Bourgogne'];
 
 Any contributions you make are **greatly appreciated**!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push -u origin feature/AmazingFeature`)
-5. Open a Pull Request against the parent Project
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'add an amazing feature'`)
+4. Push to the branch (`git push -u origin feature/amazing-feature`)
+5. Open a pull request against the parent project
 
 Or [open an issue](https://github.com/lauraferrandof/delivery-job-generator/issues) if you spot a bug :)
 
