@@ -46,6 +46,24 @@ function formReducer(state, event) {
 					status: STATES.geocoding
 				};
 			}
+
+			if (event.type === EVENTS.CLEAR_FIELD) {
+				const { blankIcon, name } = event.payload;
+
+				return {
+					...state,
+					form: {
+						...state.form,
+						[name]: {
+							...state.form[name],
+							icon: blankIcon,
+							isValid: false,
+							mapMarker: null
+						}
+					},
+					status: STATES.idle
+				};
+			}
 			break;
 
 		case STATES.geocoding:
@@ -147,9 +165,40 @@ function formReducer(state, event) {
 			if (event.type === EVENTS.EDIT) {
 				return handleItemChangeEvent(state, event);
 			}
+
+			if (event.type === EVENTS.JOB_CREATE) {
+				return {
+					...state,
+					status: STATES.job_creating
+				};
+			}
 			break;
 
 		case STATES.map_create_marker_error:
+			if (event.type === EVENTS.EDIT) {
+				return handleItemChangeEvent(state, event);
+			}
+			break;
+
+		case STATES.job_creating:
+			if (event.type === EVENTS.JOB_CREATE_RESOLVE) {
+				return {
+					...state,
+					form: event.payload,
+					showToaster: true,
+					status: STATES.idle
+				};
+			}
+
+			if (event.type === EVENTS.JOB_CREATE_REJECT) {
+				return {
+					...state,
+					status: STATES.job_create_error
+				};
+			}
+			break;
+
+		case STATES.job_create_error:
 			if (event.type === EVENTS.EDIT) {
 				return handleItemChangeEvent(state, event);
 			}

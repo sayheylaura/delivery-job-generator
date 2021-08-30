@@ -3,6 +3,7 @@ import { useEffect, useReducer, useState } from 'react';
 import createMapMarker from './createMapMarker';
 import removeMapMarker from './removeMapMarker';
 import useGeocodeQuery from './useGeocodeQuery';
+import usePostJobMutation from './usePostJobMutation';
 import {
 	ADDRESS_TYPES,
 	EVENTS,
@@ -38,6 +39,7 @@ function useForm() {
 	const [enableFormButton, setEnableFormButton] = useState(false);
 
 	const geocode = useGeocodeQuery();
+	const { postJob } = usePostJobMutation();
 
 	useEffect(() => {
 		const validationTimeout = setTimeout(() => {
@@ -119,8 +121,37 @@ function useForm() {
 		dispatch({ type: EVENTS.EDIT, payload: { name, value } });
 	}
 
+	async function handleClickCreateButton() {
+		dispatch({ type: EVENTS.JOB_CREATE });
+
+		try {
+			await postJob({
+				variables: {
+					dropoff: form.dropoffAddress.value,
+					pickup: form.pickupAddress.value
+				}
+			});
+
+			Object.keys(form).forEach(key => {
+				removeMapMarker(form[key].mapMarker);
+			});
+
+			const resetFormState = initialState.form;
+
+			dispatch({
+				type: EVENTS.JOB_CREATE_RESOLVE,
+				payload: resetFormState
+			});
+		} catch {
+			dispatch({ type: EVENTS.JOB_CREATE_REJECT });
+		} finally {
+			setEnableFormButton(false);
+		}
+	}
+
 	return {
 		actions: {
+			onClickCreateButton: handleClickCreateButton,
 			onItemBlur: handleItemBlur,
 			onItemChange: handleItemChange,
 			onMapLoaded: handleMapLoaded,
