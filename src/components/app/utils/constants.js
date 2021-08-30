@@ -4,6 +4,7 @@ const ADDRESS_TYPES = {
 };
 
 const EVENTS = {
+	EDIT: 'edit',
 	MAP_LOAD_RESOLVE: 'map_load_resolve',
 	MAP_LOAD_REJECT: 'map_load_reject'
 };

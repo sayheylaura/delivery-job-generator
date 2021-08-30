@@ -24,7 +24,7 @@ const FORM_ITEMS = [
 function Form({
 	creating,
 	enableFormButton,
-	formState,
+	form,
 	onClickCreateButton,
 	onItemBlur,
 	onItemChange
@@ -35,7 +35,7 @@ function Form({
 				return (
 					<FormItem
 						className={{ wrapper: 'form__item--margin-bottom' }}
-						icon={formState[name].icon}
+						icon={form[name].icon}
 						id={id}
 						key={id}
 						label={label}
@@ -43,7 +43,7 @@ function Form({
 						onBlur={onItemBlur}
 						onChange={onItemChange}
 						placeholder={placeholder}
-						value={formState[name].value}
+						value={form[name].value}
 					/>
 				);
 			})}
@@ -63,7 +63,7 @@ function Form({
 Form.propTypes = {
 	creating: PropTypes.bool.isRequired,
 	enableFormButton: PropTypes.bool.isRequired,
-	formState: PropTypes.shape({
+	form: PropTypes.shape({
 		dropoffAddress: PropTypes.shape({
 			icon: PropTypes.shape({
 				url: PropTypes.string,
