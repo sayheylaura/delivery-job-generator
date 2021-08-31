@@ -22,7 +22,7 @@ function formReducer(state, event) {
 			if (event.type === EVENTS.MAP_LOAD_RESOLVE) {
 				return {
 					...state,
-					googleMap: event.payload,
+					map: event.payload,
 					status: STATES.idle
 				};
 			}

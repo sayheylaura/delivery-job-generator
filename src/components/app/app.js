@@ -4,7 +4,7 @@ import Form from '../form';
 import LoadingState from '../loadingState';
 import Toaster from '../toaster';
 
-import { initializeGoogleMap, useForm } from './services';
+import { initializeMap, useForm } from './services';
 import { STATES } from './utils/constants';
 
 import './app.sass';
@@ -31,8 +31,8 @@ function App() {
 
 	useEffect(() => {
 		try {
-			initializeGoogleMap(mapRef.current).then(gmap => {
-				onMapLoaded(gmap);
+			initializeMap(mapRef.current).then(map => {
+				onMapLoaded(map);
 			});
 		} catch {
 			onMapLoadError();

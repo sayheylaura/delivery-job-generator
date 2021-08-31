@@ -28,14 +28,14 @@ const initialState = {
 			value: ''
 		}
 	},
-	googleMap: null,
+	map: null,
 	showToaster: false,
 	status: STATES.map_loading
 };
 
 function useForm() {
 	const [state, dispatch] = useReducer(formReducer, initialState);
-	const { form, googleMap, showToaster, status } = state;
+	const { form, map, showToaster, status } = state;
 
 	const [enableFormButton, setEnableFormButton] = useState(false);
 	const [geocodeTimeout, setGeocodeTimeout] = useState(null);
@@ -67,8 +67,8 @@ function useForm() {
 		return () => clearTimeout(toasterTimeout);
 	}, [showToaster]);
 
-	function handleMapLoaded(gmap) {
-		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: gmap });
+	function handleMapLoaded(loadedMap) {
+		dispatch({ type: EVENTS.MAP_LOAD_RESOLVE, payload: loadedMap });
 	}
 
 	function handleMapLoadError() {
@@ -82,7 +82,7 @@ function useForm() {
 		try {
 			const mapMarker = await createMapMarker(
 				getIcon(name, ICON_TYPES.mapMarker),
-				googleMap,
+				map,
 				{ lat, lng },
 				MAP_MARKER_TITLES[name]
 			);
