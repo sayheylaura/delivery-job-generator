@@ -21,6 +21,7 @@ module.exports = {
 		'react-hooks/exhaustive-deps': 'warn',
 		'react-hooks/rules-of-hooks': 'error',
 		'react/button-has-type': 'off',
-		'react/jsx-filename-extension': 'off'
+		'react/jsx-filename-extension': 'off',
+		'react/jsx-no-bind': 'off'
 	}
 };
