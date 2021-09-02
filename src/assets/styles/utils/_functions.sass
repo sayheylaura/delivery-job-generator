@@ -1,4 +1,5 @@
+@use 'sass:math'
 @use 'variables' as *
 
 @function rem($px--size)
-  @return $px--size / $font-size--base * 1rem
+  @return math.div($px--size, $font-size--base) * 1rem
