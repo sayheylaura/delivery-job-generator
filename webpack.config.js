@@ -17,7 +17,8 @@ module.exports = {
 	devtool: 'inline-source-map',
 	devServer: {
 		static: [path.resolve(__dirname, './dist')],
-		port: 3000
+		port: 3000,
+		hot: true
 	},
 	module: {
 		rules: [
@@ -78,7 +79,6 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.API_KEY': JSON.stringify(envVariables.API_KEY),
 			'process.env.API_URL': JSON.stringify(envVariables.API_URL)
-		}),
-		new webpack.HotModuleReplacementPlugin()
+		})
 	]
 };
